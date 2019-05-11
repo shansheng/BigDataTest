@@ -1,0 +1,257 @@
+<style>
+@media screen and (min-width: 768px) {
+	#other:hover > #othershow{
+	    display:block!important;
+	}
+	.top-dropmenu{
+		position: inherit;
+    	top: 1px;
+	}
+	.dropdown-menu{
+	  	left: -4px;
+	    min-width: 96px;
+	    margin-top: -1px!important;
+	    border-top: 2px solid #0196dc;
+	}
+	.dropdown-menu li > a:hover{
+		color: #0196dc;
+	}
+}
+
+#NameList li:hover{
+	background-color: #DCDCDC;
+}
+.list-unstyled{
+color:#333;
+display:none;
+margin-top: 9px;
+padding:0 10px;
+background-color: white;
+width: 171.48px;
+margin-left: 24px;
+z-index: 9999999999;
+position: absolute;
+
+}
+.courseItem{
+	position:absolute;
+	width:100%;
+	display:none;
+}
+.top-dropmenu li:hover .courseItem{
+	display:block;
+}
+.top-dropmenu .courseItem a:hover{
+	border-left:2px solid #4989f3;
+	color:#333;
+	background:#f3f5f6;
+}
+.top-dropmenu li > a:hover{
+	background:#4989f3 !important;
+	color:#fff !important;
+}
+.top-dropmenu li > p{
+	padding:24px 22px 18px;
+	color:#333;
+	margin-bottom:0;
+	font-size:16px;
+}
+.top-dropmenu li:hover p{
+	background:#4989f3;
+	color:#fff;
+}
+.hmajorC p{
+	padding:26px 22px 10px;
+	color:#000;
+}
+.courseItem a{
+	display:block;
+	text-align:center;
+	line-height:40px;
+	background:#fff;
+	color:#333;
+}
+#example-navbar-collapse{
+margin-left:162px;
+padding-left:0;
+}
+</style>
+<div class="head-top" style="width: 100%; background: #f5f5f5; border-bottom: 1px solid #eee; padding: 3px 0;font-size: 12px;color: #595959;">
+	<div class="container-fluid container">
+		<div class="col-xs-6 fl" style="text-align: left;">
+			<span>您好，欢迎您访问斗学网！</span>
+		</div>
+		<div class="col-xs-6 fr" style="padding-right:0;text-align: right;">
+			<img alt="" src="${request.contextPath}/assets/images/gw.png">
+			<a style="color: #595959;" href="http://www.1daoyun.com" target="_blank">一道云官网</a>&nbsp
+			<img alt="" src="${request.contextPath}/assets/images/sq.png">
+			<a style="color: #595959;" href="${request.contextPath}/course/schoolEnter">申请入驻  </a>&nbsp
+		</div>
+	</div>
+</div>
+<div class="navbar navbar-default" role="navigation" id="clearBottom">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target="#example-navbar-collapse">
+				<span class="sr-only">切换导航</span> 
+				<span class="icon-bar"></span> 
+				<span class="icon-bar"></span> 
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="${request.contextPath}/">
+			<img src="${request.contextPath}/assets/images/dx.png">
+			</a>
+		</div>
+		<div class="collapse navbar-collapse" id="example-navbar-collapse">
+			<ul class="nav navbar-nav ml-25 top-dropmenu">
+				<li id="hmajor"><a href="${request.contextPath}/course/toMajor">学习实训</a></li>
+				<li id="hmajor"><a href="${request.contextPath}/course/xmsz?option=1">项目实战</a></li>
+				<li id="hmajor"><a href="${request.contextPath}/course/xmsz?option=2">技能竞赛</a></li>
+				<li id="hmajor"><a href="${request.contextPath}/learning/index">学情分析</a></li>
+				<li id="hmajor" class="hmajorC">
+					<p>专业课程</p>
+					<div class="courseItem">
+						<a href="${request.contextPath}/course/toMajor">专业</a>
+						<a href="${request.contextPath}/course/courselist">课程</a>
+					</div>
+				</li>
+				<!-- <li id="bigdata"><a href="${request.contextPath}/course/bigdata">大数据</a></li> -->
+				<li id="bigdata"><a href="${request.contextPath}/course/race">联盟</a></li>
+				<!-- <li id="other">
+					<a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><b>·&nbsp;·&nbsp;·</b></a>
+					<ul class="dropdown-menu" id="othershow" role="menu">  
+			          <li><a href="/course/train">培训认证</a></li>
+			          <li><a href="/course/advertises/1">岗位需求</a></li> 
+			          <li><a href="/course/race">合作单位</a></li> 
+			        </ul> 
+				</li> -->
+			</ul>
+			<ul class="nav navbar-nav navbar-right top-right">
+				<div class="form-group top-search"
+					style="margin-top: 23px;float: left;margin-right: 30px;">
+					<input placeholder="搜索课程" class="form-control " id="searchkeyword"
+						type="text" maxlength="50" placeholder="" name="wd" onkeyup="searchkeywordMatch(this)"
+						style="float: right;height: 28px;;width: 88%;border-radius: 0px!important;font-size: 14px;font-size: 14px;line-height: 1.57143;color: #666;"/>
+					<a class="icon-search" onclick="search_file()" id="searchresult"
+						href="javaScript:void(0)"
+						style="background: #fff;position: relative;padding: 2px 5px;top: 5px;left: 171px;padding-left:0;">
+						<i class="glyphicon glyphicon-search"
+						style="font-size: 10px;color: #cac9c9;"></i>
+					</a>
+					<ul class="list-unstyled  clearfix " id="NameList" >
+					</ul>
+				</div>
+
+				<#if user??>
+				<li class="dropdown hidden-lt-ie8" id="openinfor">
+				<a class="dropdown-toggle dropdown-a pd0" href="javascript:void(0)" id="uname" data-toggle="dropdown"> 
+				<input type="hidden" value="${(user.realname)!(user.username)}" id="uname1"/>
+				<#if (user.headimg)?? && (user.headimg)?length gt 0>
+				<#if savetype == "2">
+			    	<img src="${visiturl}${user.headimg}" class="headImg"/>
+			    <#else>
+			    	<img src="${prefix}${user.headimg}${suffix}" class="headImg"/>
+			    </#if>
+			    <#else>
+			    	<img src="${request.contextPath}/assets/images/user.png" class="headImg"/>
+			    </#if>
+				</a>
+					<ul class="dropdown-menu" id="toggleinfor">
+					   <li>
+					     <div class="menu-header">
+					     
+					     <#if (user.headimg)?? && (user.headimg)?length gt 0>
+						 <#if savetype == "2">
+					    	<img src="${visiturl}${user.headimg}" class="headImg"/>
+					     <#else>
+					    	<img src="${prefix}${user.headimg}${suffix}" class="headImg"/>
+					     </#if>
+					     <#else>
+					    	<img src="${request.contextPath}/assets/images/user.png" class="headImg"/>
+					     </#if>
+					    <div class="pull-left headerbox"> 
+					         <div class="headerboxname">${(user.realname)!(user.username)}</div>
+					   <!--       <div class="headerboxlable">
+					           <@shiro.lacksRole name="teacher">
+					         <span>学生</span>
+					         </@shiro.lacksRole> 
+					          <@shiro.hasRole name="teacher">  
+					          <span>老师</span>
+					          </@shiro.hasRole> 
+					         </div> -->
+					      </div>
+					      <div class="clearfix"></div>
+					     </div>
+					      </li>
+					       <li>
+					      <div class="menu-body">
+					     <@shiro.hasRole name="student">
+					      	<div class="col-xs-6 headlists"> 
+					        <div class="menu-body-bg">
+						      <a href="${request.contextPath}/user/grow">成长档案</a></div>
+					        </div>
+					        <div class="col-xs-6 headlists"> 
+					        <div class="menu-body-bg">
+						      <a href="${request.contextPath}/user/mycourse/having/1">学习空间</a></div>
+					        </div>
+					       </@shiro.hasRole> 
+					    
+					    
+					       <@shiro.hasRole name="teacher">
+					         <div class="col-xs-6 headlists"> 
+					          <div class="menu-body-bg">
+						      <a href="${request.contextPath}/teacher/myselfcourset/1">我的主页</a></div>
+					        </div>
+					        <div class="col-xs-6 headlists"> 
+					          <div class="menu-body-bg">
+						      <a href="${request.contextPath}/teacher/course/1">教学空间</a></div>
+					        </div>
+					        </@shiro.hasRole> 
+					        
+					       <!--   <div class="col-xs-6 headlists"> 
+					        <div class="menu-body-bg">
+						     <a href="javascript:void(0)">订单中心</a></div>
+					        </div> -->
+					        
+					        <div class="col-xs-6 headlists"> 
+					        <div class="menu-body-bg">
+						     <a href="${request.contextPath}/user/center">个人设置</a></div>
+					        </div>
+					        
+					        <@shiro.hasRole name="orgadmin">
+					        <div class="col-xs-6 headlists"> 
+					        <div class="menu-body-bg">
+						     <a onclick="orgmanage()" href="javascript:void(0)">院校管理</a></div>
+					        </div>
+					        </@shiro.hasRole>
+					         
+					        <@shiro.hasRole name="enterpriseadmin">
+					        <div class="col-xs-6 headlists"> 
+					        <div class="menu-body-bg">
+						     <a onclick="enterprisemanage()" href="javascript:void(0)">企业管理</a></div>
+					        </div>
+					        </@shiro.hasRole>
+					         
+					        <@shiro.hasRole name="admin">
+					        <div class="col-xs-6 headlists"> 
+					        <div class="menu-body-bg">
+						     <a href="${request.contextPath}/admin/basecourse/1">系统管理</a></div>
+					        </div>
+					        </@shiro.hasRole>
+					       
+					      <div class="clearfix"></div>
+					     </div>
+					   </li>
+					    	<li class="logout" onclick="cancel()"><a href="${request.contextPath}/course/logout">退出登录</a></li>
+					 <#else>
+				<li>
+				<img src="${request.contextPath}/assets/images/user1.png" class="glyphicon-user-header hidden-xs hidden-sm hidden-md"/>
+				<a class="fs14" href="${request.contextPath}/course/tologin">登录</a>
+				</li>
+				</#if>
+				<!-- <li><a href="${request.contextPath}/course/tovisitorlogin">体验用户入口</a></li></li> -->
+			</ul></li></ul>
+		</div>
+	</div>
+</div>

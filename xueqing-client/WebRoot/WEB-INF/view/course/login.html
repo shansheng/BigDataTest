@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html>
+<!--<![endif]-->
+<head>
+<title>登录</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+
+<#include '../common/css.html'>
+</head>
+<body class="course-dashboard-page">
+	<#include '../common/header.html'>
+	<div id="content-container" class="container">
+		<div class="row row-6" style="min-height:670px">
+			<div class="col-md-6 col-md-offset-3">
+				<div class="panel panel-default panel-page">
+					<div class="panel-heading">
+						<h2>登录</h2>
+					</div>
+					<form id="login-form" class="form-vertical" method="post" novalidate="novalidate" data-widget-cid="widget-0" style="padding: 26px;">
+						<div class="form-group">
+							<label class="control-label" for="username">帐号</label>
+							<div class="controls">
+								<input class="form-control" id="username" type="text" name="_username" value="" required=""
+									data-widget-cid="widget-1" data-explain="请输入用户昵称">
+								<div class="help-block yz1 hide">请输入用户昵称</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label" for="password">密码</label>
+							<div class="controls">
+								<input class="form-control" id="password" type="password" name="_password" required=""
+									data-widget-cid="widget-2" data-explain="">
+								<div class="help-block yz2 hide">请输入账户密码</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="controls">
+								<!-- <span class="checkbox mtm pull-right"> <label> <input type="checkbox" name="_remember_me"
+										checked="checked"> 记住密码
+								</label>
+								</span> -->
+								<button class="btn btn-fat btn-primary btn-large" onclick="login();return false;">登录</button>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="controls">
+								<span class="text-muted">联合登录：</span>
+								<img style="cursor:pointer;" src="${request.contextPath}/assets/images/qq.png">
+							</div>
+						</div>
+					</form>
+					<div class="ptl">
+						<!-- <a href="/password/reset">找回密码</a> <span class="text-muted mhs">|</span> -->  
+						<span class="text-muted">还没有注册帐号？</span>
+						<a href="${request.contextPath}/course/toregeister">立即注册</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<#include '../common/footer.html'>
+
+	<div id="course-modal" class="modal"></div>
+
+	<div id="login-modal" class="modal" data-url="/login/ajax"></div>
+	<div id="modal" class="modal"></div>
+	<#include '../common/js.html'>
+
+	<script>
+		$(function() {
+			$('input').keypress(function(e) {
+				var key = e.which;
+				if (key == 13) {
+					login();
+				}
+			});
+		});
+
+		function login() {
+			var username = $("#username").val();
+			var password = $("#password").val();
+			if ((username != "") || (password != "")) {
+				if (username != "") {
+					$(".yz1").addClass('hide')
+				}
+				if (password != "") {
+					$(".yz2").addClass('hide')
+				}
+			}
+			if ((username == "") || (password == "")) {
+				if (username == "") {
+					$(".yz1").removeClass('hide')
+				}
+				if (password == "") {
+					$(".yz2").removeClass('hide')
+				}
+				return;
+			}
+
+			var data = {
+				username : username,
+				password : password
+			};
+			$.ajax({
+				url : "${request.contextPath}/course/login",
+				type : "post",
+				data : data,
+				success : function(s) {
+					if (s.success) {
+						var rurl = s.other;
+						if (rurl)
+						{
+							location.href = rurl;
+						}
+						else
+						{
+							location.href="${request.contextPath}/";											
+						}
+						
+					} else {
+						alert(s.msg);
+					}
+				}
+			});
+		}
+		
+	</script>
+
+</body>
+</html>

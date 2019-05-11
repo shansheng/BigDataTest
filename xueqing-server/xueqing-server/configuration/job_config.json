@@ -1,0 +1,73 @@
+{
+	"wbsites": [
+		{
+			"wbsitename": "51Job",
+			"initurl": [
+				{
+					"name": "物联网",
+					"url": "http://localhost:8080/xueqing-web/course/index/1"
+				}
+			],
+			"breakurl": "http://localhost:8080/xueqing-web/course/index/1",
+			"listurl": "search.51job.com",
+			"pageurl": "http://jobs.51job.com",
+			"fields": [
+				{
+					"name": "date",
+					"chinesename": "发布时间",
+					"path": "<em class=\"i4\"></em>([^<]+)</span>"
+				},
+				{
+					"name": "company",
+					"chinesename": "公司名称",
+					"path": "//p[@class='cname']/a/text()"
+				},
+				{
+					"name": "companymess",
+					"chinesename": "公司信息",
+					"path": "//p[@class='msg ltype']/text()"
+				},
+				{
+					"name": "jobname",
+					"chinesename": "岗位名称",
+					"path": "//div[@class='cn']/h1/text()"
+				},
+				{
+					"name": "location",
+					"chinesename": "工作地点",
+					"path": "//span[@class='lname']/text()"
+				},
+				{
+					"name": "experience",
+					"chinesename": "工作经验",
+					"path": "<em class=\"i1\"></em>([^<]+)</span>"
+				},
+				{
+					"name": "salary",
+					"chinesename": "工资",
+					"path": "//div[@class='cn']/strong/text()"
+				},
+				{
+					"name": "amount",
+					"chinesename": "招聘人数",
+					"path": "<em class=\"i3\"></em>([^<]+)</span>"
+				},
+				{
+					"name": "education",
+					"chinesename": "学历",
+					"path": "<em class=\"i2\"></em>([^<]+)</span>"
+				},
+				{
+					"name": "description",
+					"chinesename": "职位描述",
+					"path": "//div[@class='bmsg job_msg inbox']/text()"
+				},
+				{
+					"name": "category",
+					"chinesename": "职位类别",
+					"path": "//span[@class='el']/text()"
+				}
+			]
+		}
+	]
+}

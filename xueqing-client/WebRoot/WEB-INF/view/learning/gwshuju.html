@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<!-- Required Meta Tags Always Come First -->
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<#include '../common/stylesheets1.html'>
+<link href="${request.contextPath}/assets/stylesheets/pages/gwdata.css" rel="stylesheet">
+<link href="${request.contextPath}/assets/stylesheets/header.css" rel="stylesheet">
+<link href="${request.contextPath}/assets/stylesheets/font-awesome.min.css" rel="stylesheet">
+<title>斗学网-学情</title>
+<style>
+body {
+    padding: 0;
+    margin: 0;
+    font-family: "microsoft yahei"!important;
+    background: #f1f4f6;
+    min-width: 1400px;
+    height: 100%;
+    position: absolute!important;
+}
+</style>
+</head>
+<body>
+<div class="container-fluid">
+<#include '../learning/learnLeft.html'>
+<div class="main-right">
+<#include '../learning/learnHeader.html'>
+<div class="col-xs-12">
+<div class="panel panel-default panel-box" style="margin-top: 20px;">
+    <div class="panel-body">
+        <div class="pull-left" style="line-height: 44px;margin-right:5px">选择岗位类型:</div>
+        <div class="pull-left checkboxs select" id="job_cloud">
+	         <a href="javascript:void(0)" class="cblue" onclick="getdatas('云计算运维',1,'job_cloud')">
+		         <span class="fa fa-server fapo"></span>
+		         <span class="fontPo">云计算运维</span>
+	         </a>
+         </div>
+          <div class="pull-left checkboxs" id="job_iot">
+	         <a href="javascript:void(0)" class="cqing" onclick="getdatas('云计算开发',1,'job_iot')">
+		         <span class="fa fa-forumbee fapo"></span>
+		         <span class="fontPo">云计算开发</span>
+	         </a>
+         </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+</div>
+</div>
+
+
+<div class="col-xs-12">
+	<div class="panel panel-default panel-box">
+		
+	</div>
+</div>
+
+</div>
+</div>
+<#include '../common/javascripts.html'>
+<script>
+$(function() {
+	$("#gwfx").addClass("liactive")
+	var tmp="<a href='${request.contextPath}/'>首页</a><span style='padding:0 10px'>&gt;</span><a href='${request.contextPath}/learning/index'>学情</a><span style='padding:0 10px'>&gt;</span><a href='javascript:void(0)'>岗位分析</a><span style='padding:0 10px'>&gt;</span><a href='javascript:void(0)'>岗位方向</a>"
+	$("#route").html(tmp);
+	getdatas("云计算运维","0") // 0为初始化
+	
+})
+</script>
+</body>
+</html>

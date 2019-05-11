@@ -1,0 +1,12 @@
+eclipse.preferences.version=1
+encoding//WebRoot/WEB-INF/view/common=UTF-8
+encoding//WebRoot/WEB-INF/view/common/header.html=UTF-8
+encoding//WebRoot/WEB-INF/view/course/login.html=UTF-8
+encoding//WebRoot/WEB-INF/view/learning=UTF-8
+encoding//WebRoot/WEB-INF/view/learning/learnHeader.html=UTF-8
+encoding//WebRoot/WEB-INF/view/learning/learnLeft.html=UTF-8
+encoding//src/com/xiandian/cloud/common/util/HBaseStorage.java=utf-8
+encoding//src/com/xiandian/cloud/service/MethodLog.java=UTF-8
+encoding//src/com/xiandian/cloud/web/LearningController.java=UTF-8
+encoding//src/xd.properties=UTF-8
+encoding/<project>=UTF-8

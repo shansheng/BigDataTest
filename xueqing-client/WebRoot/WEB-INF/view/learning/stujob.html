@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<!-- Required Meta Tags Always Come First -->
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<#include '../common/stylesheets1.html'>
+<link href="${request.contextPath}/assets/stylesheets/pages/gwdata.css" rel="stylesheet">
+<link href="${request.contextPath}/assets/stylesheets/header.css" rel="stylesheet">
+<link href="${request.contextPath}/assets/stylesheets/font-awesome.min.css" rel="stylesheet">
+<title>斗学网-学情</title>
+<style>
+body {
+    padding: 0;
+    margin: 0;
+    font-family: "microsoft yahei"!important;
+    background: #f1f4f6;
+    min-width: 1400px;
+    height: 100%;
+    position: absolute!important;
+}
+</style>
+</head>
+<body>
+<div class="container-fluid">
+<#include '../learning/learnLeft.html'>
+<div class="main-right">
+<#include '../learning/learnHeader.html'>
+<div class="col-xs-12">
+<div class="panel panel-default panel-box">
+	<div class="panel-heading">
+		<h3 class="panel-title">
+		院校就业综合情况分析
+		</h3>
+	</div>
+	<div class="panel-body">
+	<div class="col-xs-12">
+		 <div id="main" style="width: 100%;height:350px"></div>
+		</div>
+	</div>
+</div>
+</div>
+
+<div class="col-xs-12">
+<div class="panel panel-default panel-box">
+	<div class="panel-heading">
+		<h3 class="panel-title">
+		已就业学生具体情况分析
+		</h3>
+		<h1 class="panel-title" style="text-align: center;">
+		一共分析已就业学生:${totalman}名
+		</h1>
+	</div>
+	<div class="panel-body">
+	<div class="col-xs-3">
+		 <div id="main1" style="width: 100%;height:250px"></div>
+		</div>
+		<div class="col-xs-3">
+		 <div id="main2" style="width: 100%;height:250px"></div>
+		</div>
+		<div class="col-xs-3">
+		 <div id="main3" style="width: 100%;height:250px"></div>
+		</div>
+		<div class="col-xs-3">
+		 <div id="main4" style="width: 100%;height:250px"></div>
+		</div>
+		<div class="col-xs-3">
+		 <div id="main5" style="width: 100%;height:250px"></div>
+		</div>
+		<div class="col-xs-3">
+		 <div id="main6" style="width: 100%;height:250px"></div>
+		</div>
+		
+		<div class="col-xs-3">
+		 <div id="main7" style="width: 100%;height:250px"></div>
+		</div>
+		
+		<div class="col-xs-3">
+		 <div id="main8" style="width: 100%;height:250px"></div>
+		</div>
+	</div>
+</div>
+</div>
+
+<div class="col-xs-12">
+<div class="panel panel-default panel-box">
+	<div class="panel-heading">
+		<h3 class="panel-title">
+		工作中使用的技能分析
+		</h3>
+	</div>
+	<div class="panel-body">
+	<div class="col-xs-12">
+		 <div id="main9" style="width: 100%;height:450px"></div>
+		</div>
+	</div>
+</div>
+</div>
+
+</div>
+</div>
+<#include '../common/javascripts.html'>
+<script src="${request.contextPath}/assets/javascripts/echarts3/echarts.min.js" type="text/javascript"></script>
+
+<script>
+$(function() {
+	$("#stujob").addClass("liactive")
+	var tmp="<a href='${request.contextPath}/'>首页</a><span style='padding:0 10px'>&gt;</span><a href='${request.contextPath}/learning/index'>学情</a><span style='padding:0 10px'>&gt;</span><a href='javascript:void(0)'>就业分析</a><span style='padding:0 10px'>&gt;</span><a href='javascript:void(0)'>就业情况</a>"
+		$("#route").html(tmp);
+})
+var chart = echarts.init(document.getElementById('main')); 
+var chart1 = echarts.init(document.getElementById('main1')); 
+var chart2 = echarts.init(document.getElementById('main2')); 
+var chart3 = echarts.init(document.getElementById('main3')); 
+var chart4 = echarts.init(document.getElementById('main4')); 
+var chart5 = echarts.init(document.getElementById('main5')); 
+var chart6 = echarts.init(document.getElementById('main6')); 
+var chart7 = echarts.init(document.getElementById('main7')); 
+var chart8 = echarts.init(document.getElementById('main8'));
+var chart9 = echarts.init(document.getElementById('main9')); 
+
+
+	
+	$.ajax({
+		url : "${request.contextPath}/learning/getjob",
+		type : "post",
+		//data : data,
+		success : function(s) {
+				if(s.success){
+					var total=s.other;
+					var natruepie=total.natruepie;
+					var scalepie=total.scalepie;
+					var jobnamepie=total.jobnamepie;
+					var salarypie=total.salarypie;
+					var propie=total.propie;
+					var isjoinpie=total.isjoinpie;
+					var industrypie=total.industrypie;
+					var ismatchpie=total.ismatchpie;
+					var skillnames=total.skillnames;
+					var skillvalues=total.skillvalues;
+					var schools=total.schools;
+					var matchValues=total.matchValues;
+					var jiuye=total.jiuye;
+					option = {
+							  grid: {
+							        left: '0%',
+							        right: '0%',
+							        bottom: '3%',
+							        containLabel: true
+							    },
+						    tooltip: {
+						        trigger: 'axis',
+						        axisPointer: {
+						            type: 'cross',
+						            crossStyle: {
+						                color: '#999'
+						            }
+						        }
+						    },
+						   
+						    legend: {
+						        data:['就业率','就业对口率'],
+						        right:'8%'
+						    },
+						    xAxis: [
+						        {
+						            type: 'category',
+						            data: schools,
+						            axisPointer: {
+						                type: 'shadow'
+						            },
+						            axisLabel: {  
+						            	   interval:0
+						            	} 
+						        }
+						    ],
+						    yAxis: [
+						        {
+						            type: 'value',
+						            name: '就业率',
+						            min: 0,
+						            max: 100,
+						            interval: 20,
+						            axisLabel: {
+						                formatter: '{value}%'
+						            }
+						        },
+						        {
+						            type: 'value',
+						            name: '就业对口率',
+						            min: 0,
+						            max: 100,
+						            interval: 20,
+						            axisLabel: {
+						                formatter: '{value} %'
+						            }
+						        }
+						    ],
+						    series: [
+						             
+						        {
+						            name:'就业率',
+						            type:'line',
+						            data:jiuye,
+						            itemStyle: {   
+						                //通常情况下：
+						                normal:{  
+					                      color:'#b9bfd1'
+						                    }
+						                }
+						        },
+						        
+						        {
+						            name:'就业对口率',
+						            type:'line',
+						            yAxisIndex: 1,
+						            data:matchValues,
+						            itemStyle: {   
+						                //通常情况下：
+						                normal:{  
+					                      color:'#ff7f17'
+						                    }
+						                }
+						        }
+						    ]
+						};
+						chart.setOption(option);
+			
+	//饼图
+	option1 = {
+  title: {
+        text: '企业性质',
+        x: 'center',
+        y: 'center',
+        itemGap: 20,
+        textStyle : {
+            color : 'rgba(30,144,255,0.8)',
+            fontFamily : '微软雅黑',
+            fontSize : 15,
+            fontWeight : 'bolder'
+        }
+    },
+    tooltip : {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    series : [
+        {
+            name:'企业性质',
+            type:'pie',
+            radius : ['50%', '70%'],
+            itemStyle : {
+                normal : {
+                    label : {
+                        show : false
+                    },
+                    labelLine : {
+                        show : false
+                    }
+                },
+            
+            },
+            data:natruepie
+        }
+    ]
+};
+	chart1.setOption(option1);        
+	
+	option2 = {
+			  title: {
+			        text: '企业规模',
+			        x: 'center',
+			        y: 'center',
+			        itemGap: 20,
+			        textStyle : {
+			            color : 'rgba(30,144,255,0.8)',
+			            fontFamily : '微软雅黑',
+			            fontSize : 15,
+			            fontWeight : 'bolder'
+			        }
+			    },
+			    tooltip : {
+			        trigger: 'item',
+			        formatter: "{a} <br/>{b} : {c} ({d}%)"
+			    },
+			    series : [
+			        {
+			            name:'企业规模',
+			            type:'pie',
+			            radius : ['50%', '70%'],
+			            itemStyle : {
+			                normal : {
+			                    label : {
+			                        show : false
+			                    },
+			                    labelLine : {
+			                        show : false
+			                    }
+			                },
+			            
+			            },
+			            data:scalepie
+			        }
+			    ]
+			};
+				chart2.setOption(option2); 
+	
+				option3 = {
+						  title: {
+						        text: '工作岗位',
+						        x: 'center',
+						        y: 'center',
+						        itemGap: 20,
+						        textStyle : {
+						            color : 'rgba(30,144,255,0.8)',
+						            fontFamily : '微软雅黑',
+						            fontSize : 15,
+						            fontWeight : 'bolder'
+						        }
+						    },
+						    tooltip : {
+						        trigger: 'item',
+						        formatter: "{a} <br/>{b} : {c} ({d}%)"
+						    },
+						    series : [
+						        {
+						            name:'工作岗位',
+						            type:'pie',
+						            radius : ['50%', '70%'],
+						            itemStyle : {
+						                normal : {
+						                    label : {
+						                        show : false
+						                    },
+						                    labelLine : {
+						                        show : false
+						                    }
+						                },
+						            
+						            },
+						            data:jobnamepie
+						        }
+						    ]
+						};
+							chart3.setOption(option3); 
+
+							
+							option4 = {
+									  title: {
+									        text: '薪资分布',
+									        x: 'center',
+									        y: 'center',
+									        itemGap: 20,
+									        textStyle : {
+									            color : 'rgba(30,144,255,0.8)',
+									            fontFamily : '微软雅黑',
+									            fontSize : 15,
+									            fontWeight : 'bolder'
+									        }
+									    },
+									    tooltip : {
+									        trigger: 'item',
+									        formatter: "{a} <br/>{b} : {c} ({d}%)"
+									    },
+									    series : [
+									        {
+									            name:'薪资分布',
+									            type:'pie',
+									            radius : ['50%', '70%'],
+									            itemStyle : {
+									                normal : {
+									                    label : {
+									                        show : false
+									                    },
+									                    labelLine : {
+									                        show : false
+									                    }
+									                },
+									            
+									            },
+									            data:salarypie
+									        }
+									    ]
+									};
+										chart4.setOption(option4); 
+										
+										option5 = {
+												  title: {
+												        text: '工作地区',
+												        x: 'center',
+												        y: 'center',
+												        itemGap: 20,
+												        textStyle : {
+												            color : 'rgba(30,144,255,0.8)',
+												            fontFamily : '微软雅黑',
+												            fontSize : 15,
+												            fontWeight : 'bolder'
+												        }
+												    },
+												    tooltip : {
+												        trigger: 'item',
+												        formatter: "{a} <br/>{b} : {c} ({d}%)"
+												    },
+												    series : [
+												        {
+												            name:'工作地区',
+												            type:'pie',
+												            radius : ['50%', '70%'],
+												            itemStyle : {
+												                normal : {
+												                    label : {
+												                        show : false
+												                    },
+												                    labelLine : {
+												                        show : false
+												                    }
+												                },
+												            
+												            },
+												            data:propie
+												        }
+												    ]
+												};
+													chart5.setOption(option5); 
+													
+													option6 = {
+															  title: {
+															        text: '从事行业',
+															        x: 'center',
+															        y: 'center',
+															        itemGap: 20,
+															        textStyle : {
+															            color : 'rgba(30,144,255,0.8)',
+															            fontFamily : '微软雅黑',
+															            fontSize : 15,
+															            fontWeight : 'bolder'
+															        }
+															    },
+															    tooltip : {
+															        trigger: 'item',
+															        formatter: "{a} <br/>{b} : {c} ({d}%)"
+															    },
+															    series : [
+															        {
+															            name:'从事行业',
+															            type:'pie',
+															            radius : ['50%', '70%'],
+															            itemStyle : {
+															                normal : {
+															                    label : {
+															                        show : false
+															                    },
+															                    labelLine : {
+															                        show : false
+															                    }
+															                },
+															            
+															            },
+															            data:industrypie
+															        }
+															    ]
+															};
+																chart6.setOption(option6); 
+																
+																
+
+	option7 = {
+		title : {
+			text : '是否参加国赛',
+			x : 'center',
+			y : 'center',
+			itemGap : 20,
+			textStyle : {
+				color : 'rgba(30,144,255,0.8)',
+				fontFamily : '微软雅黑',
+				fontSize : 15,
+				fontWeight : 'bolder'
+			}
+		},
+		tooltip : {
+			trigger : 'item',
+			formatter : "{a} <br/>{b} : {c} ({d}%)"
+		},
+		series : [ {
+			name : '是否参加国赛',
+			type : 'pie',
+			radius : [ '50%', '70%' ],
+			itemStyle : {
+				normal : {
+					label : {
+						show : false
+					},
+					labelLine : {
+						show : false
+					}
+				},
+
+			},
+			data : isjoinpie
+		} ]
+	};
+	chart7.setOption(option7);
+
+	option8 = {
+		title : {
+			text : '是否对口',
+			x : 'center',
+			y : 'center',
+			itemGap : 20,
+			textStyle : {
+				color : 'rgba(30,144,255,0.8)',
+				fontFamily : '微软雅黑',
+				fontSize : 15,
+				fontWeight : 'bolder'
+			}
+		},
+		tooltip : {
+			trigger : 'item',
+			formatter : "{a} <br/>{b} : {c} ({d}%)"
+		},
+		series : [ {
+			name : '是否对口',
+			type : 'pie',
+			radius : [ '50%', '70%' ],
+			itemStyle : {
+				normal : {
+					label : {
+						show : false
+					},
+					labelLine : {
+						show : false
+					}
+				},
+
+			},
+			data : ismatchpie
+		} ]
+	};
+	chart8.setOption(option8);
+	
+	option9 = {
+			 
+		     tooltip : {
+			        // trigger: 'axis',
+			        showDelay : 0,
+			        formatter: '已就业学生中占比 : {c0}%<br />使用技能 : {b0}'
+			    },
+		    legend: {
+		        data: ['技能']
+		    },
+		    grid: {
+		        left: '4%',
+		        x2:200,
+		        bottom: '3%',
+		        containLabel: true
+		    },
+		    xAxis: {
+		    	name : '百分比',
+		        type: 'value',
+		        boundaryGap: [0, 0.1],
+		        max: 100,
+	            interval: 10,
+		    },
+		    yAxis: {
+		        type: 'category',
+		            data: skillnames
+		    },
+		    series: [
+		        {
+		            name: '技能',
+		            type: 'bar',
+		            data: skillvalues
+		        }
+		    ]
+		};
+	chart9.setOption(option9);
+				}
+		}
+	})
+</script>
+
+</body>
+</html>

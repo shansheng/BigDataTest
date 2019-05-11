@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<!-- Required Meta Tags Always Come First -->
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<#include '../common/stylesheets1.html'>
+<link href="${request.contextPath}/assets/stylesheets/pages/gwdata.css" rel="stylesheet">
+<link href="${request.contextPath}/assets/stylesheets/header.css" rel="stylesheet">
+<link href="${request.contextPath}/assets/stylesheets/font-awesome.min.css" rel="stylesheet"> rel="stylesheet">
+<title>斗学网-学情</title>
+<style>
+body {
+    padding: 0;
+    margin: 0;
+    font-family: "microsoft yahei"!important;
+    background: #f1f4f6;
+    min-width: 1400px;
+    height: 100%;
+    position: absolute!important;
+}
+.word{
+	text-align: center;
+	font-size: 26px;
+}
+</style>
+</head>
+<body>
+<div class="container-fluid">
+<#include '../learning/learnLeft.html'>
+<div class="main-right">
+<#include '../learning/learnHeader.html'>
+<div class="col-xs-12">
+<div class="panel panel-default panel-box">
+	<div class="panel-heading">
+		<h3 class="panel-title">
+		院校云计算技术与应用专业学生聚类分析
+		</h3>
+	</div>
+	<div class="panel-body">
+	<div class="col-xs-12">
+<!-- 	<div class="panel-body">
+        <div class="pull-left" style="line-height: 44px;margin-right:5px;font-weight:600">请选择学生年级:</div>
+        <div class="pull-left checkboxs" id="class_2015">
+	         <a href="javascript:void(0)"  onclick="getdatas('2015','1')">	      
+		         <span>2015级</span>
+	         </a>
+        </div>
+       <div class="pull-left checkboxs" id="class_2016">
+	         <a href="javascript:void(0)" onclick="getdatas('2016','1')">
+		         <span>2016级</span>
+	         </a>
+         </div>
+          <div class="pull-left checkboxs" id="class_2017">
+	         <a href="javascript:void(0)" onclick="getdatas('2017','1')">
+		         <span>2017级</span>
+	         </a>
+         </div>
+        
+        <div class="clearfix"></div>
+    </div> -->
+	</div>
+	<div class="col-xs-12">
+		 <div id="main" style="width: 100%;height:800px"></div>
+		</div>
+	</div>
+	<div class="col-xs-12 row" style="margin-top: 0px;">
+		<div class="col-xs-6 word">潜力者</div>
+		<div class="col-xs-6 word">挑战者</div>
+	</div>
+</div>
+</div>
+
+</div>
+</div>
+<#include '../common/javascripts.html'>
+<script src="${request.contextPath}/assets/javascripts/echarts3/echarts.min.js" type="text/javascript"></script>
+
+<script>
+$(function() {
+	var tmp="<a href='${request.contextPath}/'>首页</a><span style='padding:0 10px'>&gt;</span><a href='${request.contextPath}/learning/index'>学情</a><span style='padding:0 10px'>&gt;</span><a href='javascript:void(0)'>学情分析</a><span style='padding:0 10px'>&gt;</span><a href='javascript:void(0)'>学生聚类</a>"
+		$("#route").html(tmp);
+	$("#stujl").addClass("liactive")
+})
+	var chart = echarts.init(document.getElementById('main')); 
+
+$.ajax({
+	url:"${request.contextPath}/learning/getGrade",
+	type:"post",
+	success:function(s){
+		var map=s.other;
+		var schoolNames=map.schoolNames;
+		var gradeBeans=map.gradeBeans;
+		option = {
+			    grid: {
+			        left: '3%',
+			        right: '7%',
+			        bottom: '3%',
+			        containLabel: true
+			    },
+			    tooltip : {
+			        // trigger: 'axis',
+			        showDelay : 0,
+			        formatter : function (params) {
+			            if (params.value.length > 1) {
+			                return params.seriesName + ' :<br/>'
+			                + params.value[0] + '分 '
+			                + params.value[1] + '分';
+			            }
+			            else {
+			                return params.seriesName + ' :<br/>'
+			                + params.name + ' : '
+			                + params.value + '分 ';
+			            }
+			        },
+			        axisPointer:{
+			            show: true,
+			            type : 'cross',
+			            lineStyle: {
+			                type : 'dashed',
+			                width : 1
+			            }
+			        }
+			    },
+			    toolbox: {
+			        feature: {
+			            dataZoom: {},
+			            brush: {
+			                type: ['rect', 'polygon', 'clear']
+			            }
+			        }
+			    },
+			    brush: {
+			    },
+			    legend: {
+			        data: schoolNames,
+			        left: 'center'
+			    },
+			    xAxis : [
+			        {
+			            type : 'value',
+			            scale:true,
+			            axisLabel : {
+			                formatter: ''
+			            },
+			            splitLine: {
+			                show: false
+			            },
+			            max: 100,
+			            min: 50
+			        }
+			    ],
+			    yAxis : [
+			        {
+			            type : 'value',
+			            scale:true,
+			            axisLabel : {
+			                formatter: ''
+			            },
+			            splitLine: {
+			                show: false
+			            },
+				        max: 100,
+			            min: 50
+			        }
+			    ],
+			    series : gradeBeans
+			};
+		chart.setOption(option);
+	}
+})
+
+/* $(function(){
+	$.ajax({
+		url : "${request.contextPath}/learning/getstujl",
+		type : "post",
+		data : {
+			
+		},
+		success : function(s) {
+			var list = s.msg;
+			var vce = s.other.vce;
+			var year = s.other.year;
+			option = {
+				    grid: {
+				        left: '2%',
+				        right: '10%',
+				        bottom: '3%',
+				        containLabel: true
+				    },
+				    tooltip : {
+				        // trigger: 'axis',
+				        showDelay : 0,
+				        formatter : function (params) {
+				            if (params.value.length > 1) {
+				                return params.value[2] + ' :<br/>'
+				               +'综合能力评估分:' + params.value[1] + '<br/>'
+				                +'专业技术能力值:' + params.value[0] ;
+				            }
+				            else {
+				                return 
+				               '综合能力评估分:<br/>'
+				                +'专业技术能力值:' ;
+				            }
+				        },
+				        axisPointer:{
+				            show: true,
+				            type : 'cross',
+				            lineStyle: {
+				                type : 'dashed',
+				                width : 1
+				            }
+				        }
+				    },
+				  
+				    legend: {
+				        data: vce,
+				        left: 'center'
+				    },
+				    xAxis : [
+				        {
+				        	name : '(专业技术能力)',
+				            type : 'value',
+				            scale:true,
+				            axisLabel : {
+				                formatter: '{value}'
+				            },
+				            splitLine: {
+				                show: true
+				            }
+				        }
+				    ],
+				    yAxis : [
+				        {
+				        	name : '(综合能力评估分值)',
+				            type : 'value',
+				            scale:true,
+				            axisLabel : {
+				                formatter: '{value}'
+				            },
+				            splitLine: {
+				                show: true
+				            }
+				        }
+				    ],
+				    series : list
+				};
+			chart.setOption(option);
+		}
+	});
+});
+
+
+				
+function getdatas(name,status){
+	if(status=="1"){
+		$(".checkboxs").removeClass("select");
+		$("#"+name).addClass("select");
+	}
+	$.ajax({
+		url : "${request.contextPath}/learning/selectgrade",
+		type : "post",
+		data : {
+			grade:name
+		},
+		success : function(s) {
+			var list = s.msg;
+			var vce = s.other.vce;
+			var grade = s.other.grade;
+			$("#class_"+grade).addClass("select");
+			option = {
+				    grid: {
+				        left: '2%',
+				        right: '10%',
+				        bottom: '3%',
+				        containLabel: true
+				    },
+				    tooltip : {
+				        // trigger: 'axis',
+				        showDelay : 0,
+				        formatter : function (params) {
+				            if (params.value.length > 1) {
+				                return params.value[2] + ' :<br/>'
+				               +'综合能力评估分:' + params.value[0] + '<br/>'
+				                +'专业技术能力值:' + params.value[1] ;
+				            }
+				            else {
+				                return 
+				               '综合能力评估分:<br/>'
+				                +'专业技术能力值:' ;
+				            }
+				        },
+				        axisPointer:{
+				            show: true,
+				            type : 'cross',
+				            lineStyle: {
+				                type : 'dashed',
+				                width : 1
+				            }
+				        }
+				    },
+				  
+				    legend: {
+				        data: vce,
+				        left: 'center'
+				    },
+				    xAxis : [
+				        {
+				        	name : '(专业技术能力)',
+				            type : 'value',
+				            scale:true,
+				            axisLabel : {
+				                formatter: '{value}'
+				            },
+				            splitLine: {
+				                show: true
+				            }
+				        }
+				    ],
+				    yAxis : [
+				        {
+				        	name : '(综合能力评估分值)',
+				            type : 'value',
+				            scale:true,
+				            axisLabel : {
+				                formatter: '{value}'
+				            },
+				            splitLine: {
+				                show: true
+				            }
+				        }
+				    ],
+				    series : list
+				};
+			chart.setOption(option);
+		}
+	});
+}	 */
+		
+
+	
+	
+	
+</script>
+
+</body>
+</html>

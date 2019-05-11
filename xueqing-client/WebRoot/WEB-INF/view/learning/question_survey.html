@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html>
+<!--<![endif]-->
+<head>
+<title>调查问卷</title>
+<meta name="keywords"
+	content="一道云，云课堂，MOOC,慕课,在线学习,在线教育,大规模开放式在线课程,网络公开课,视频公开课,高职mooc,中职mooc" />
+<meta name="description"
+	content="一道云课堂 是先电打造的在线学习平台，每一个有提升愿望的人，都可以在这里学习中国最好的中高职课程，学完还能获得认证证书。一道云课堂是国内最好的中高职MOOC学习平台，拥有来自于多所高校的顶级课程，最好最全的中高职课程，与名师零距离。" />
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="author" content="">
+<#include '../common/stylesheets1.html'>
+<link href="${request.contextPath}/assets/stylesheets/pages/gwdata.css" rel="stylesheet">
+<link href="${request.contextPath}/assets/stylesheets/header.css" rel="stylesheet">
+<link rel="stylesheet" href="${request.contextPath}/assets/javascripts/chosen.min.css">
+
+<style>
+body {
+	background: #EFEFEF !important;
+}
+
+.carousel {
+	top: -20px
+}
+
+#site-navbar {
+	margin-bottom: 0px !important
+}
+
+.zp-title {
+	font-size: 16px;
+	color: #4c5157;
+	margin-bottom: 5px;
+	text-align: center
+}
+
+.zp-title-tab {
+	margin-right: 40px;
+	padding: 5px;
+	font-weight: bold;
+	font-size: 24px;
+	color: #000
+}
+
+.zp-content {
+	margin-top: 10px
+}
+
+.course-style {
+	margin: 20px 0px;
+	text-decoration: none;
+	overflow: hidden
+}
+
+.course-box {
+	display: block;
+	position: relative;
+	min-height: 220px;
+	margin: 0;
+	background: #fff;
+}
+
+.course-img {
+	overflow: hidden
+}
+
+/* .course-body {
+	padding: 5% 5% 0;
+} */
+.course-title-index {
+	color: #4c5157;
+	font-size: 15px;
+	overflow: hidden;
+	float: left;
+	font-weight: 600;
+	height: 45px;
+	text-align: left
+}
+
+.course-title-xz {
+	float: right;
+	padding: 3px 10px;
+	color: #fff;
+	border-radius: 100px;
+	background-color: #59CF4A;
+}
+
+.course-box .course-footer {
+	width: 100%;
+	color: #9B9DA2;
+	padding: 10px 5% 10px 5%;
+}
+
+.course-num {
+	float: left;
+	font-size: 12px;
+	padding-right: 25px
+}
+
+.course-update-status {
+	float: right;
+	font-size: 12px;
+	padding-right: 5px
+}
+
+.more {
+	font-size: 14px;
+	color: #7B7F88;
+	display: inline-block;
+	margin-top: 25px;
+}
+
+.course-progress-bar {
+	width: 100%;
+	height: 5px;
+	background-color: #eee
+}
+
+.course-progress-bar>div {
+	background-color: #5ac65a;
+	box-shadow: none
+}
+
+.orgimg {
+	margin-top: -12px;
+	margin-right: 7px;
+	/* border-radius: 50%; */
+	width: 50px;
+	height: 40px;
+}
+
+.spec {
+	width: 85px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.mbl {
+	margin-bottom: -20px
+}
+
+.swiper-container {
+	width: 100%;
+	height: 500px;
+	margin-left: auto;
+	margin-right: auto;
+	background: none;
+}
+
+.swiper-slide {
+	text-align: center;
+	font-size: 18px;
+	background: #f3f5f6;
+	/* Center slide text vertically */
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	align-items: center;
+}
+
+.swiper-button-next {
+	background-image: url("${request.contextPath}/assets/images/right.png");
+	width: 60px;
+	height: 60px;
+}
+
+.swiper-button-prev {
+	background-image: url("${request.contextPath}/assets/images/left.png");
+	width: 60px;
+	height: 60px;
+}
+.ques{
+	border:1px solid #DEDEDE;
+	margin-top: 14px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	padding-left: 81px;
+	font-size: 18px;
+	font-family: Microsoft YaHei;
+	background: #FEFEFE;
+}
+.inp{
+	margin-top: 15px;
+}
+.sel{
+	color:red;
+}
+.skill{
+	width: 120px;
+	height: 41px;
+}
+.modal-backdrop {
+  opacity: 0 !important;
+  filter: alpha(opacity=0) !important;
+  z-index: 0;
+}
+</style>
+</head>
+<body class="homepage">
+	<#include '../learning/learnLeft.html'>
+	<div class="main-right">
+	<#include '../learning/learnHeader.html'>
+	<div class="container">
+		<div class="row"><h1 style="text-align: center;">就业调研问卷</h1></div>
+		<div class="row"><hr style="height: 6px;background-color:#2582CE;margin-top: 18px" /></div>
+		<div class="row" style="margin-top: 21px">
+		<div class="col-xs-2" style="padding-left: 43px;"><img src="${request.contextPath}/assets/images/question.png"></div>
+		<div class="col-xs-10" style="font-size: 19px;">您好！我们正在进行斗学网的用户研究，如果您有斗学网的经验，我们恳请您花几分钟填写一下这份<br>
+		问卷，您的反馈对我们有莫大的帮助！</div>
+		</div>
+		<div class="row ques" style="margin-top: 21px;">
+			<div>1.&nbsp;教育背景</div>
+			<div class="row inp" id="address">&nbsp;&nbsp;
+			<select id="year" name="year" nullmsg="请选择毕业年份">
+				<option value="0">请选择毕业年份</option>
+				<option value="0">2000</option>
+				<option value="0">2001</option>
+				<option value="0">2002</option>
+				<option value="0">2003</option>
+				<option value="0">2004</option>
+				<option value="0">2005</option>
+				<option value="0">2006</option>
+				<option value="0">2007</option>
+				<option value="0">2008</option>
+				<option value="0">2009</option>
+				<option value="0">2010</option>
+				<option value="0">2011</option>
+				<option value="0">2012</option>
+				<option value="0">2013</option>
+				<option value="0">2014</option>
+				<option value="0">2015</option>
+				<option value="0">2016</option>
+				<option value="0">2017</option>
+			</select>&nbsp;&nbsp;&nbsp;&nbsp;<select class="prov" id="prov" name="prov" nullmsg="请选择地区！">
+				</select>
+				<select class="city" id="city" name="city" nullmsg="请选择地区！"></select>
+				<select class="dist" id="county" name="county" nullmsg="请选择学校！"></select>
+			</div>
+			</div>
+		<div class="row ques">
+			<div>2.&nbsp;您是否参与过全国职业技能大赛</div>
+			<div class="inp">&nbsp;&nbsp;<input type="radio" checked="checked" onclick="itmechange();" name="yesorno" value="是" />
+			&nbsp;&nbsp;是&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="radio" onclick="itmechange();" name="yesorno" value="否" />&nbsp;&nbsp;否&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<select id="itme">
+					<option value="0">赛项</option>
+  					<option value="1">省赛</option>
+  					<option value="2">国赛</option>
+				</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<select id="ranking">
+					<option value="0">名次</option>
+  					<option value="1">第一名</option>
+  					<option value="2">第二名</option>
+  					<option value="3">第三名</option>
+  					<option value="4">无名次</option>
+				</select>
+			</div>
+		</div>
+	<!-- 	<div class="row ques">
+			<div>3.&nbsp;您目前从事的行业</div>
+			<div class="inp">&nbsp;&nbsp;
+				<select id="industrybig">
+					
+				</select>
+				
+			</div>
+		</div> -->
+		<div class="row ques">
+			<div>3.&nbsp;您的工作岗位</div>
+			<div class="inp">&nbsp;&nbsp;
+				<select id="industry">
+					<option value="0">请选择</option>
+  					<option value="1">计算机/互联网/通信/电子</option>
+  					<option value="2">会计/金融/银行/保险</option>
+  					<option value="3">贸易/消费/制造/营运</option>
+  					<option value="4">制药/医疗</option>
+  					<option value="5">广告/媒体</option>
+  					<option value="6">房地产/建筑</option>
+  					<option value="7">专业服务/教育/培训</option>
+  					<option value="8">服务业</option>
+  					<option value="9">物流/运输</option>
+  					<option value="10">能源/原材料</option>
+  					<option value="11">政府/非赢利机构/其他</option>
+				</select>&nbsp;
+				<select id="jobcategory">
+					<option value="0">岗位类别</option>
+  					<option value="1">开发</option>
+  					<option value="2">运维</option>
+  					<option value="3">市场</option>
+  					<option value="4">技术支持</option>
+  					<option value="5">销售</option>
+  					<option value="6">管理</option>
+  					<option value="7">其他</option>
+				</select>&nbsp;
+				<select id="jobname">
+					<option value="0">具体岗位</option>
+  					<option value="1">云计算</option>
+  					<option value="2">大数据</option>
+  					<option value="3">软件开发</option>
+  					<option value="4">前端开发</option>
+  					<option value="5">物联网</option>
+  					<option value="6">移动开发</option>
+  					<option value="7">其他</option>
+				</select>&nbsp;
+			</div>
+		</div>
+		<div class="row ques">
+			<div>4.&nbsp;您工作中用到的技能&nbsp;<span class="sel">(多选题)</span></div>
+			<!-- <div class="inp" id="skills">&nbsp;&nbsp;<button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-default" style="border: dashed ;">+</button>
+			</div> -->
+	   <div>
+	   	 <select  multiple class="chzn-select" tabindex="50" data-placeholder="选择技能" style="width:550px;">
+          	<option value='1' >OpenStack</option>
+          	<option value='1' >Docker</option>
+          	<option value='1' >Hadoop</option>
+          	<option value='1' >Spark</option>
+          	<option value='1' >Ansiable</option>
+          	<option value='1' >Puppet</option>
+          	<option value='1' >Chef</option>
+          	<option value='1' >Windows</option>
+          	<option value='1' >Linux/Unix</option>
+          	<option value='1' >CentOS</option>
+          	<option value='1' >Ubuntu</option>
+          	<option value='1' >RedHat</option>
+          	<option value='1' >Debian</option>
+          	<option value='1' >KVM</option>
+          	<option value='1' >阿里云</option>
+          	<option value='1' >腾讯云</option>
+          	<option value='1' >华为云</option>
+          	<option value='1' >Workstation</option>
+          	<option value='1' >ESXi</option>
+          	<option value='1' >Raid</option>
+          	<option value='1' >LVM</option>
+          	<option value='1' >NFS</option>
+          	<option value='1' >CIFS/Samba</option>
+          	<option value='1' >iSCSI</option>
+          	<option value='1' >zookeeper</option>
+          	<option value='1' >mapreduce</option>
+          	<option value='1' >mahout</option>
+          	<option value='1' >神经网络</option>
+          	<option value='1' >机器学习</option>
+          	<option value='1' >zigbee</option>
+          	<option value='1' >Swift</option>
+          	<option value='1' >Python</option>
+          	<option value='1' >Linux Shell</option>
+          	<option value='1' >HTML</option>
+          	<option value='1' >CSS</option>
+          	<option value='1' >Javascript</option>
+          	<option value='1' >Vue</option>
+          	<option value='1' >AnglarJS</option>
+          	<option value='1' >jquery</option>
+          	<option value='1' >Bootstrap</option>
+          	<option value='1' >AJAX</option>
+          	<option value='1' >JSON</option>
+          	<option value='1' >XML</option>
+          	<option value='1' >React</option>
+          	<option value='1' >MySQL</option>
+          	<option value='1' >Oracle</option>
+          	<option value='1' >MongeDB</option>
+          	<option value='1' >Hive</option>
+          	<option value='1' >Hbase</option>
+          	<option value='1' >SQL Server</option>
+          	<option value='1' >java</option>
+          	<option value='1' >Mybatis</option>
+          	<option value='1' >Hibernate</option>
+          	<option value='1' >Struts</option>
+          	<option value='1' >Shiro</option>
+          	<option value='1' >Spring</option>
+          	<option value='1' >Spring MVC</option>
+          	<option value='1' >Redis</option>
+          	<option value='1' >Memcache</option>
+          	<option value='1' >EhCache</option>
+          	<option value='1' >junit</option>
+          	<option value='1' >RabbitMQ</option>
+          	<option value='1' >ActiveMQ</option>
+          	<option value='1' >python</option>
+          	<option value='1' >php</option>
+          	<option value='1' >scala</option>
+          	<option value='1' >go</option>
+          	<option value='1' >c/c++</option>
+          	<option value='1' >net/c#</option>
+          	<option value='1' >swift</option>
+          	<option value='1' >Hendler</option>
+          	<option value='1' >SlidingMenu</option>
+          	<option value='1' >SQLite</option>
+          	<option value='1' >TCP/IP</option>
+          	<option value='1' >xUtils</option>
+          	<option value='1' >ViewPagerIndicator</option>
+          	<option value='1' >ImageLoader</option>
+          	<option value='1' >Lrucache</option>
+          	<option value='1' >JNI</option>
+          	<option value='1' >ListView</option>
+          	<option value='1' >GridView</option>
+          	<option value='1' >MJRefresh</option>
+          	<option value='1' >SDWebImage</option>
+          	<option value='1' >AFNetworking</option>
+          	<option value='1' >JSONModel</option>
+          	<option value='1' >MBProgress</option>
+          	<option value='1' >MagicalRecord</option>
+          	<option value='1' >CoreData</option>
+          	<option value='1' >NSUserdDefault</option>
+          	<option value='1' >plist</option>
+          	<option value='1' >NSThread</option>
+          	<option value='1' >GCD</option>
+          	<option value='1' >NSOpeartion</option>
+          </select>
+        </div>
+		</div>
+		<div class="row ques">
+			<div>5.&nbsp;您所在的企业性质&nbsp;<span class="sel">(单选)</span></div>
+			<div class="inp">&nbsp;&nbsp;
+			<input type="radio" checked="checked" name="nature" value="外资" />&nbsp;&nbsp;外资&nbsp;&nbsp;&nbsp;
+			<input type="radio"  name="nature" value="合资" />&nbsp;&nbsp;合资&nbsp;&nbsp;&nbsp;
+			<input type="radio"  name="nature" value="民营" />&nbsp;&nbsp;民营&nbsp;&nbsp;&nbsp;
+			<input type="radio"  name="nature" value="事业单位" />&nbsp;&nbsp;事业单位&nbsp;&nbsp;&nbsp;
+			<input type="radio"  name="nature" value="政府机关" />&nbsp;&nbsp;政府机关&nbsp;&nbsp;&nbsp;
+			<input type="radio"  name="nature" value="非盈利机构" />&nbsp;&nbsp;非盈利机构
+			</div>
+		</div>
+		<div class="row ques">
+			<div>6.&nbsp;您所在企业规模&nbsp;<span class="sel">(单选)</span></div>
+			<div class="inp">&nbsp;&nbsp;
+			<input type="radio" checked="checked" name="scale" value="少于50人" />&nbsp;&nbsp;少于50人&nbsp;&nbsp;&nbsp;
+			<input type="radio"  name="scale" value="50-150人" />&nbsp;&nbsp;50-150人&nbsp;&nbsp;&nbsp;
+			<input type="radio"  name="scale" value="150-500人" />&nbsp;&nbsp;150-500人&nbsp;&nbsp;&nbsp;
+			<input type="radio"  name="scale" value="500-1000人" />&nbsp;&nbsp;500-1000人&nbsp;&nbsp;&nbsp;
+			<input type="radio"  name="scale" value="1000-5000人" />&nbsp;&nbsp;1000-5000人&nbsp;&nbsp;&nbsp;
+			<input type="radio"  name="scale" value="5000-10000人" />&nbsp;&nbsp;5000-10000人
+			&nbsp;&nbsp;
+			<input type="radio"  name="scale" value="10000以上" />10000以上
+			</div>
+		</div>
+		<div class="row ques">
+			<div>7.&nbsp;月薪范围&nbsp;<span class="sel">(单选)</span></div>
+			<div class="inp">&nbsp;&nbsp;
+			<input type="radio" checked="checked" name="salary" value="2千以下" />&nbsp;&nbsp;2千以下&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="radio"  name="salary" value="2000-2999" />&nbsp;&nbsp;2000-2999&nbsp;&nbsp;&nbsp;
+			<input type="radio"  name="salary" value="3000-3999" />&nbsp;&nbsp;3000-3999&nbsp;&nbsp;&nbsp;
+			<input type="radio"  name="salary" value="4000-4999" />&nbsp;&nbsp;4000-4999&nbsp;&nbsp;&nbsp;
+			<input type="radio"  name="salary" value="5000-5999" />&nbsp;&nbsp;5000-5999&nbsp;&nbsp;&nbsp;
+			<input type="radio"  name="salary" value="6000-6999" />&nbsp;&nbsp;6000-6999&nbsp;&nbsp;&nbsp;
+			<input type="radio"  name="salary" value="7000-7999" />&nbsp;&nbsp;7000-7999&nbsp;&nbsp;&nbsp;
+			<input type="radio"  name="salary" value="8K以上" />&nbsp;&nbsp;8K以上&nbsp;&nbsp;&nbsp;
+			
+			</div>
+		</div>
+		<div class="row ques">
+			<div>8.&nbsp;工作地点</div>
+			<div class="inp">&nbsp;&nbsp;
+			
+				<select name="province2" id="province2" onchange="getCity()">
+					<option value="">省</option>
+				</select>&nbsp;
+				<select name="city2" id="city2">
+					<option value="">市</option>
+				</select>
+			</div>
+		</div>
+		<div class="row ques">
+			<div>9.&nbsp;现在岗位与专业对口程度&nbsp;<span class="sel">(单选)</span></div>
+			<div class="inp">&nbsp;&nbsp;<input type="radio" checked="checked" name="duikou" value="对口" />&nbsp;对口
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="radio"  name="duikou" value="不对口" />&nbsp;不对口</div>
+		</div>
+		<div class="row ques" style="text-align: center;">
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="getmes();">提交</button>
+		</div>
+	</div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">提交内容</h4>
+            </div>
+            <div class="modal-body">
+            <table class="table table-striped">
+  <tbody>
+    <tr>
+      <td>毕业年份</td>
+      <td id="year1"></td>
+    </tr>
+    <tr>
+      <td>院校</td>
+      <td id="school1"></td>
+    </tr>
+     <tr>
+      <td>是否参加技能大赛</td>
+      <td id="isjoin1"></td>
+    </tr>
+     <tr>
+      <td>工作岗位</td>
+      <td id="job1"></td>
+    </tr>
+     <tr>
+      <td>技能</td>
+      <td id="skill1"></td>
+    </tr>
+     <tr>
+      <td>企业性质</td>
+      <td id="natrue1"></td>
+    </tr>
+     <tr>
+      <td>企业规模</td>
+      <td id="scale1"></td>
+    </tr>
+     <tr>
+      <td>月薪范围</td>
+      <td id="salary1"></td>
+    </tr>
+    <tr>
+      <td>工作地点</td>
+      <td id="procity1"></td>
+    </tr>
+    <tr>
+      <td>是否对口</td>
+      <td id="ismatch1"></td>
+    </tr>
+  </tbody>
+</table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="commit();">确认提交</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+</div>
+	
+
+	<script type="text/javascript" src="${request.contextPath}/assets/javascripts/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="${request.contextPath}/assets/javascripts/bootstrap/bootstrap.min.js"></script>
+	<script src="${request.contextPath}/assets/javascripts/swiper.min.js"></script>
+	<script src="${request.contextPath}/assets/javascripts/echarts.min.js"></script>
+	<script src="${request.contextPath}/assets/javascripts/chosen.jquery.min.js"></script>
+	<script type="text/javascript" src="${request.contextPath}/assets/javascripts/citylist/jquery.schoolselect.js"></script>
+	
+	<script type="text/javascript">
+		//省市二级级联--------------------------------------------------------------------------------
+		//省份
+var provinceArr = [];
+provinceArr[0] = ['北京市'];
+provinceArr[1] = ['天津市'];
+provinceArr[2] = ['上海市'];
+provinceArr[3] = ['重庆市'];
+provinceArr[4] = ['河北省'];
+provinceArr[5] = ['河南省'];
+provinceArr[6] = ['云南省'];
+provinceArr[7] = ['辽宁省'];
+provinceArr[8] = ['黑龙江省']; 
+provinceArr[9] = ['湖南省']; 
+provinceArr[10] = ['安徽省'];
+provinceArr[11] = ['山东省'];
+provinceArr[12] = ['新疆维吾尔自治区']; 
+provinceArr[13] = ['江苏省'];
+provinceArr[14] = ['浙江省'];
+provinceArr[15] = ['江西省'];
+provinceArr[16] = ['湖北省'];
+provinceArr[17] = ['广西壮族'];
+provinceArr[18] = ['甘肃省'];
+provinceArr[19] = ['山西省'];
+provinceArr[20] = ['内蒙古自治区'];
+provinceArr[21] = ['陕西省'];
+provinceArr[22] = ['吉林省'];
+provinceArr[23] = ['福建省'];
+provinceArr[24] = ['贵州省'];
+provinceArr[25] = ['广东省'];
+provinceArr[26] = ['青海省'];
+provinceArr[27] = ['西藏'];
+provinceArr[28] = ['四川省'];
+provinceArr[29] = ['宁夏回族'];
+provinceArr[30] = ['海南省'];
+provinceArr[31] = ['台湾省'];
+provinceArr[32] = ['香港特别行政区'];
+provinceArr[33] = ['澳门特别行政区'];
+//将省份加载到下拉选择框中
+//var skillsdata="openstack,vmware,kvm,docker,linux/unix,windows,xen,ceph,iptable,kubernetes,alluxio,libvirt,cloudstack,aws,阿里云,腾讯云,华为云,azure,计算机网络hadoop, hive, spark, flume,kafka, mongodb, hbase, zookeeper,mapreduce,mahout神经网络,机器学习 zigbeehtml, css,j2ee,spring,mybatis,hibernate,react, vue, angular,jquery, bootstrap, javascript,d3,echartsmysql,oracle,sql server,tomcatjava,python,php,scala,go,javascript,c/c++,.net/c#,swift/objectc";
+
+
+$(function() {
+	$("#address").citySelect({
+		nodata : "none",
+		required : false
+	});
+	getProvince();
+	$(".chzn-select").chosen();
+/* 	var skillArr=skillsdata.split(",");
+	for(var i=0;i<=skillArr.length;i++){
+		var append="<option value='"+(i+1)+"' >"+skillArr[i]+"</option>";
+		$(".chzn-select").html(append);
+	} */
+})
+
+
+function getmes() {
+	var spanEl=$(".search-choice span");
+	var html="";
+	for (var i = 0; i < spanEl.length; i++) {
+        var s=spanEl[i].innerText;
+        s+=",";
+        html+=s;
+   }
+	var data={
+			//毕业年份
+			"year":parseInt($("#year").find("option:selected").text()),
+			//院校
+			"school":$("#county").find("option:selected").text(),
+			//学历
+			//"education":$("#education").find("option:selected").text(),
+			//是否参加比赛
+			"isjoin":$('input[name="yesorno"]:checked ').val(),
+			//参赛年份
+			//"itmeyear":$("#itmeyear").find("option:selected").text(),
+			//赛项
+			"itme":$("#itme").find("option:selected").text(),
+			//名次
+			"ranking":$("#ranking").find("option:selected").text(),
+			//行业
+			"industry":$("#industry").find("option:selected").text(),
+			//岗位类别
+			"jobcategory":$("#jobcategory").find("option:selected").text(),
+			//具体岗位
+			"jobname":$("#jobname").find("option:selected").text(),
+			//技能
+			"skill":html,
+			//企业性质
+			"nature":$('input[name="nature"]:checked ').val(),
+			//规模
+			"scale":$('input[name="scale"]:checked ').val(),
+			//薪资
+			"salary":$('input[name="salary"]:checked ').val(),
+			//省
+			"province":$("#province2").find("option:selected").text(),
+			//市
+			"city":$("#city2").find("option:selected").text(),
+			//是否对口
+			"isyes":$('input[name="duikou"]:checked ').val(),
+			
+	};
+	document.getElementById("year1").innerHTML=data.year;
+	document.getElementById("school1").innerHTML=data.school;
+	//document.getElementById("education1").innerHTML=data.education;
+	document.getElementById("isjoin1").innerHTML=data.isjoin;
+	document.getElementById("job1").innerHTML=data.jobname;
+	document.getElementById("skill1").innerHTML=data.skill;
+	document.getElementById("natrue1").innerHTML=data.nature;
+	document.getElementById("scale1").innerHTML=data.scale;
+	document.getElementById("salary1").innerHTML=data.salary;
+	document.getElementById("procity1").innerHTML=data.province;
+	document.getElementById("ismatch1").innerHTML=data.isyes;
+}
+function commit() {
+	
+	var spanEl=$(".search-choice span");
+	var html="";
+	for (var i = 0; i < spanEl.length; i++) {
+        var s=spanEl[i].innerText;
+        s+=",";
+        html+=s;
+   }
+	//var skill=html.substring(0,html.Length-1);
+	var data={
+			//毕业年份
+			"year":parseInt($("#year").find("option:selected").text()),
+			//院校
+			"school":$("#county").find("option:selected").text(),
+			//学历
+			//"education":$("#education").find("option:selected").text(),
+			//是否参加比赛
+			"isjoin":$('input[name="yesorno"]:checked ').val(),
+			//参赛年份
+			//"itmeyear":$("#itmeyear").find("option:selected").text(),
+			//赛项
+			"itme":$("#itme").find("option:selected").text(),
+			//名次
+			"ranking":$("#ranking").find("option:selected").text(),
+			//行业
+			"industry":$("#industry").find("option:selected").text(),
+			//岗位类别
+			"jobcategory":$("#jobcategory").find("option:selected").text(),
+			//具体岗位
+			"jobname":$("#jobname").find("option:selected").text(),
+			//技能
+			"skill":html,
+			//企业性质
+			"nature":$('input[name="nature"]:checked ').val(),
+			//规模
+			"scale":$('input[name="scale"]:checked ').val(),
+			//薪资
+			"salary":$('input[name="salary"]:checked ').val(),
+			//省
+			"province":$("#province2").find("option:selected").text(),
+			//市
+			"city":$("#city2").find("option:selected").text(),
+			//是否对口
+			"isyes":$('input[name="duikou"]:checked ').val(),
+			
+	};
+	$.ajax({
+		url : "${request.contextPath}/learning/savesurvey",
+		type : "post",
+		data : data,
+		success : function(s){
+			if(s.success){
+			alert("提交成功");
+			window.location.href="${request.contextPath}/learning/index";
+			}
+		}
+	})
+}
+
+function itmechange() {
+	var yesorno = $('input[name="yesorno"]').filter(':checked').val();
+	if(yesorno==0){
+		$("#itmeyear").attr("disabled", true);
+		$("#itme").attr("disabled", true);
+		$("#ranking").attr("disabled", true);
+	}else{
+		$("#itmeyear").removeAttr("disabled");
+		$("#itme").removeAttr("disabled");
+		$("#ranking").removeAttr("disabled");
+	}
+}
+function getProvince()
+{
+       //通过id获取省份下拉框的对象 （省份的下拉框的id是province）    
+   var provincesobj=document.getElementById("province2");
+    for(var i=0;i<provinceArr.length;i++)
+    {
+        provincesobj.options[provincesobj.options.length]=new Option(provinceArr[i],i);    
+    
+    }    
+    
+}
+//市县,每个数组第一个元素为省份,其他的为这个省份下的市县
+var cityArr = [];
+cityArr[0] = ['北京市','东城区', '西城区','崇文区','宣武区','朝阳区','丰台区','石景山区', '海淀区','门头沟区', '房山区','通州区','顺义区','昌平区','大兴 区','怀柔区','平谷区','密云县','延庆县'];
+cityArr[1] = ['天津市','和平区','河东区', '河西区', '南开区', '河北区', '红桥区', '塘沽区', '汉沽区', '大港区', '东丽区', '西青区', '津南区', '北辰区', '武清区', '宝坻区', '宁河县', '静海县', '蓟县']; 
+cityArr[2] = ['上海市','黄浦区','卢湾区', '徐汇区','长宁区','静安区','普陀区','闸北区','虹口区', '杨浦区', '闵行区', '宝山区', '嘉定区', '浦东新区', '金山区', '松江区', '青浦区', '南汇区', '奉贤区', '崇明县']; 
+cityArr[3] = ['重庆市','万州区','涪陵区','渝中区','大渡口区','江北区','沙坪坝区','九龙坡区','南岸区','北碚区','万盛区','双桥区','渝北区','巴南区','黔江区','长寿区','江津区','合川区','永川区','南川区','綦江县','潼南县','铜梁县','大足县','荣昌县','璧山县','梁平县','城口县','丰都县','垫江县','武隆县','忠县','开县','云阳县','奉节县','巫山县','巫溪县','石柱土家族自治县','秀山土家族苗族自治县','酉阳土家族苗族自治县','彭水苗族土家族自治县']; 
+cityArr[4] = ['河北省','石家庄市', '唐山市', '秦皇岛市', '邯郸市', '邢台市', '保定市', '张家口市', '承德市', '沧州市', '廊坊市', '衡水市']; 
+cityArr[5] = ['河南省','郑州市','开封市','洛阳市', '平顶山市', '安阳市', '鹤壁市', '新乡市', '焦作市', '济源市', '濮阳市', '许昌市', '漯河市', '三门峡市', '南阳市', '商丘市', '信阳市', '周口市', '驻马店市']; 
+cityArr[6] = ['云南省','昆明市',' 曲靖市','玉溪市','保山市','昭通市','丽江市','思茅市','临沧市','楚雄彝族自治州','红河哈尼族彝族自治州','文山壮族苗族自治州','西双版纳傣族自治州','大理白族自治州','德宏傣族景颇族自治州','怒江傈僳族自治州','迪庆藏族自治州']; 
+cityArr[7] = ['辽宁省','沈阳市' ,'大连市' ,'鞍山市' ,'抚顺市' ,'本溪市' ,'丹东市' ,'锦州市' ,'营口市' ,'阜新市' ,'辽阳市' ,'盘锦市' ,'铁岭市' ,'朝阳市' ,'葫芦岛市']; 
+cityArr[8] = ['黑龙江省','哈尔滨市','齐齐哈尔市','鸡西市','鹤岗市','双鸭山市', '大庆市', '伊春市', '佳木斯市', '七台河市', '牡丹江市', '黑河市', '绥化市', '大兴安岭地区']; 
+cityArr[9] = ['湖南省','长沙市', '株洲市','湘潭市', '衡阳市', '邵阳市', '岳阳市', '常德市', '张家界市', '益阳市', '郴州市', '永州市', '怀化市', '娄底市', '湘西土家族苗族自治州']; 
+cityArr[10] = ['安徽省','合肥市', '芜湖市', '蚌埠市', '淮南市', '马鞍山市', '淮北市', '铜陵市', '安庆市', '黄山市', '滁州市','阜阳市','宿州市', '巢湖市', '六安市', '亳州市', '池州', '宣城市']; 
+cityArr[11] = ['山东省','济南市','青岛市','淄博市','枣庄市','东营市','烟台市','潍坊市','济宁市','泰安市','威海市','日照市','莱芜市','临沂市','德州市','聊城市','滨州市','菏泽市'];
+cityArr[12] = ['新疆维吾尔自治区','乌鲁木齐市', '克拉玛依市', '吐鲁番地区', '哈密地区', '昌吉回族自治州 ', '博尔塔拉蒙古自治州 ', '巴音郭楞蒙古自治州 ', '阿克苏地区', '克孜勒苏柯尔克孜自治州 ', '喀什地区', '和田地区', '伊犁哈萨克自治州', '塔城地区', '阿勒泰地区', '石河子市', '阿拉尔市', '图木舒克市', '五家渠市' ]; 
+cityArr[13] = ['江苏省','南京市', '无锡市', '徐州市', '常州市', '苏州市', '南通市', '连云港市', '淮安市', '盐城市', '扬州市', '镇江市', '泰州市', '宿迁市' ];
+cityArr[14] = ['浙江省','杭州市', '宁波市', '温州市', '嘉兴市', '湖州市', '绍兴市', '金华市', '衢州市', '舟山市', '台州市', '丽水市']; 
+cityArr[15] = ['江西省','南昌市','景德镇市','萍乡市','九江市','新余市','鹰潭市','赣州市','吉安市','宜春市','抚州市','上饶市'];
+cityArr[16] = ['湖北省','武汉市','黄石市','十堰市', '宜昌市', '襄樊市', '鄂州市', '荆门市', '孝感市', '荆州市', '黄冈市', '咸宁市', '随州市', '恩施土家族苗族自治州','仙桃市', '潜江市', '天门市', '神农架林区'];
+cityArr[17] = ['广西壮族','南宁市','柳州市','桂林市','梧州市','北海市','防城港市','钦州市','贵港市','玉林市','百色市','贺州市','河池市','来宾市','崇左市'];
+cityArr[18] = ['甘肃省','兰州市','嘉峪关市', '金昌市', '白银市', '天水市', '武威市', '张掖市', '平凉市', '酒泉市', '庆阳市', '定西市', '陇南市', '临夏回族自治州', '甘南藏族自治州'];
+cityArr[19] = ['山西省','太原市','大同市', '阳泉市', '长治市', '晋城市', '朔州市', '晋中市', '运城市', '忻州市', '临汾市', '吕梁市' ];
+cityArr[20] = ['内蒙古自治区','呼和浩特市', '包头市', '乌海市', '赤峰市', '通辽市', '鄂尔多斯市', '呼伦贝尔市', '巴彦淖尔市', '乌兰察布市', '兴安盟', '锡林郭勒盟', '阿拉善盟' ];
+cityArr[21] = ['陕西省','西安市','铜川市','宝鸡市', '咸阳市', '渭南市', '延安市', '汉中市', '榆林市', '安康市', '商洛市' ];
+cityArr[22] = ['吉林省','长春市', '吉林市', '四平市', '辽源市', '通化市', '白山市', '松原市', '白城市', '延边朝鲜族自治州'];
+cityArr[23] = ['福建省','福州市', '厦门市', '莆田市', '三明市', '泉州市', '漳州市', '南平市', '龙岩市', '宁德市' ];
+cityArr[24] = ['贵州省','贵阳市','六盘水市', '遵义市', '安顺市', '铜仁地区', '黔西南布依族苗族自治州', '毕节地区', '黔东南苗族侗族自治州', '黔南布依族苗族自治州'];
+cityArr[25] = ['广东省','广州市','韶关市','深圳市','珠海市','汕头市','佛山市','江门市','湛江市','茂名市','肇庆市','惠州市','梅州市','汕尾市','河源市','阳江市','清远市','东莞市','中山市','潮州市','揭阳市','云浮市'];
+cityArr[26] = ['青海省','西宁市' ,'海东地区', '海北藏族自治州', '黄南藏族自治州', '海南藏族自治州', '果洛藏族自治州', '玉树藏族自治州', '海西蒙古族藏族自治州'];
+cityArr[27] = ['西藏','拉萨市','昌都地区', '山南地区', '日喀则地市', '那曲地区', '阿里地区', '林芝地区' ];
+cityArr[28] = ['四川省','成都市','自贡市', '攀枝花市', '泸州市', '德阳市', '绵阳市', '广元市', '遂宁市', '内江市', '乐山市', '南充市', '眉山市', '宜宾市', '广安市', '达州市', '雅安市', '巴中市', '资阳市', '阿坝藏族羌族自治州', '甘孜藏族自治州', '凉山彝族自治州'];
+cityArr[29] = ['宁夏回族','银川市','石嘴山市','吴忠市','固原市','中卫市'];
+cityArr[30] = ['海南省','海口市','三亚市','五指山市', '琼海市', '儋州市', '文昌市', '万宁市', '东方市', '定安县', '屯昌县', '澄迈县', '临高县', '白沙黎族自治县', '昌江黎族自治县', '乐东黎族自治县', '陵水黎族自治县', '保亭黎族苗族自治县', '琼中黎族苗族自治县' ];
+cityArr[31] = ['台湾省','台北市', '高雄市', '基隆市', '台中市', '台南市', '新竹市', '嘉义市'];
+cityArr[32] = ['香港特别行政区','中西区', '湾仔区', '东区', '南区', '油尖旺区', '深水埗区', '九龙城区', '黄大仙区', '观塘区', '荃湾区', '葵青区', '沙田区', '西贡区', '大埔区', '北区', '元朗区', '屯门区', '离岛区' ];
+cityArr[33] = ['澳门特别行政区','澳门'];
+//当省份的选择发生变化时调用 该方法   将市县加载到下拉选择框
+function getCity()
+{
+//1.获取省份选择框的对象
+var provincesobj=document.getElementById("province2");
+//2.获取市县选择框的对象
+var cityobj=document.getElementById("city2");
+//3.获取被选择的省份的索引
+var index=provincesobj.selectedIndex;
+
+//alert(provincesobj[index].value+","+provincesobj[index].text);
+////4.通过省份的索引获取它的value值，value值也是它在数组的索引值
+var value=provincesobj[index].value;;
+
+//5.获取对应省份的市县数组
+var cityName=cityArr[value];
+//6.将下拉框清楚索引为0之后的，只保留第一个
+cityobj.length=1;
+//通过循环遍历市县元素给下拉框赋值
+for(var i=1;i<cityArr[value].length;i++)
+{
+    cityobj.options[cityobj.options.length]=new Option(cityName[i],i);
+    
+}
+
+}
+		
+	</script>
+</body>
+</html>

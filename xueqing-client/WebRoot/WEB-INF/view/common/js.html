@@ -1,0 +1,123 @@
+<script type="text/javascript" src="${request.contextPath}/assets/javascripts/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="${request.contextPath}/assets/javascripts/jquery-ui.js"> </script>
+<script type="text/javascript" src="${request.contextPath}/assets/javascripts/jquery.cookie.js"> </script>
+<script type="text/javascript" src="${request.contextPath}/assets/javascripts/bootstrap/bootstrap.js"></script>
+<script type="text/javascript" src="${request.contextPath}/assets/javascripts/common.js"></script>
+<script type="text/javascript" src="${request.contextPath}/assets/javascripts/jqPaginator.js"></script>
+<!-- <script type="text/javascript" src="${request.contextPath}/assets/sky-forms-pro/skyforms/js/jquery-ui.min.js"></script> -->
+<script type="text/javascript" src="${request.contextPath}/assets/javascripts/Validform_v5.3.2.js"></script>
+<script type="text/javascript" src="${request.contextPath}/assets/javascripts/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="${request.contextPath}/assets/javascripts/jquery.ztree.exedit-3.5.min.js"></script>
+
+<script type="text/javascript" charset="utf-8" src="${request.contextPath}/assets/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="${request.contextPath}/assets/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="${request.contextPath}/assets/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" src="${request.contextPath}/assets/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+<script type="text/javascript" src="${request.contextPath}/assets/javascripts/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="${request.contextPath}/assets/javascripts/bootstrap-datetimepicker.zh-CN.js"></script>
+
+
+<script type="text/javascript" src="${request.contextPath}/assets/stream/js/stream-v1.js"></script>
+
+<script>
+var u = navigator.userAgent, app = navigator.appVersion;
+var a=u.indexOf('Trident');
+if(u.indexOf('Trident') > -1){
+	/* alert('请切换至极速模式浏览') */
+	if(!+'\v1' && !'1'[0]){ 
+		alert("系统检测到您浏览器版本过低，可能会影响到您浏览页面建议使用极速模式浏览") 
+		} 
+	if(navigator.appVersion.match(/8./i)=="8."){alert("系统检测到您浏览器版本过低可能会影响到您浏览页面效果，建议使用'极速模式'浏览") }
+	}
+$(function() {
+	
+$("#searchkeyword").keyup(function(){
+    if(event.keyCode == 13){
+    	search_file();
+    }
+});
+
+/* $("#openinfor").click(function(){
+	$("#toggleinfor").toggle()
+}) */
+})
+
+ function orgmanage(){
+	location.href = "${request.contextPath}/orgadmin/collagebasecouse";
+}
+
+/* function getQueryString(name) {  
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");  
+    var r = window.location.search.substr(1).match(reg); 
+    if (r != null) return r=decodeURI(r[2]).replace("+", " ").trim();
+//     if (r != null) return unescape(r[2]);  
+    return "";  
+} 
+
+
+
+
+
+	function isSelectAll(obj) {
+		var box = $("input[name='"+obj.name+"']");
+		for ( var i = 0; i < box.length; i++) {
+			box[i].checked = obj.checked;
+		}
+	}
+	
+	function getids(name){
+		var ids = [];
+		$("input:checkbox[name='"+name+"']:checked").each(function(i){
+			ids[i]=this.value;
+		});
+		return ids;
+	}
+	
+	function getnotids(name){
+		var ids = [];
+		$("input:checkbox[name='"+name+"']").not("input:checked").each(function(i){
+			ids[i]=this.value;
+		});
+		return ids;
+	} */
+	//当前时间   course.js用到
+	function getnowtime() {  
+		var nowtime = new Date();  
+		var year = nowtime.getFullYear();  
+		var month = padleft0(nowtime.getMonth() + 1);  
+    	var day = padleft0(nowtime.getDate());  
+   		var hour = padleft0(nowtime.getHours());  
+    	var minute = padleft0(nowtime.getMinutes());  
+    	var second = padleft0(nowtime.getSeconds());  
+    	var millisecond = nowtime.getMilliseconds(); millisecond = millisecond.toString().length == 1 ? "00" + millisecond : millisecond.toString().length == 2 ? "0" + millisecond : millisecond;  
+    	return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;  
+	}  
+	//补齐两位数  
+	function padleft0(obj) {  
+		return obj.toString().replace(/^[0-9]{1}$/, "0" + obj);  
+	}  
+
+	function search_file() {
+				var searchtj = $('#search-tj').val();
+				var searchtj = "kc";
+				var pageNo = 1;
+				var keyword = $('#searchkeyword').val();
+				keyword=$.trim(keyword);
+				if (keyword == '') {
+					return;
+				}
+				keyword = encodeURIComponent(keyword,"utf-8");
+				//alert(keyword);
+				if (searchtj == 'kc') {
+					location.href = "/course/searchCourseBykeyword/"+ pageNo + "/" + keyword;
+				}
+				if (searchtj == 'sc') {
+					location.href = "/course/searchstorepaginationBykeyword/"+ pageNo + "/" + keyword;
+				}
+				if (searchtj == 'jy') {
+					location.href = "/course/employlist/searchEmployBykeyword/"+ pageNo + "/" + keyword;
+				}
+
+			}
+</script>

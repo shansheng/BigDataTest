@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<!-- Required Meta Tags Always Come First -->
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<#include '../common/stylesheets1.html'>
+<link href="${request.contextPath}/assets/stylesheets/pages/gwdata.css" rel="stylesheet">
+<link href="${request.contextPath}/assets/stylesheets/header.css" rel="stylesheet">
+<link href="${request.contextPath}/assets/stylesheets/font-awesome.min.css" rel="stylesheet">
+<title>斗学网-学情</title>
+<style>
+body {
+    padding: 0;
+    margin: 0;
+    font-family: "microsoft yahei"!important;
+    background: #f1f4f6;
+    min-width: 1400px;
+    height: 100%;
+    position: absolute!important;
+}
+</style>
+</head>
+<body>
+<div class="container-fluid">
+<#include '../learning/learnLeft.html'>
+<div class="main-right">
+<#include '../learning/learnHeader.html'>
+<div class="col-xs-12">
+<div class="panel panel-default panel-box" style="margin-top: 20px;">
+    <div class="panel-body">
+        <div class="pull-left" style="line-height: 44px;margin-right:5px">选择岗位类型:</div>
+        <div class="pull-left checkboxs select" id="job_cloud">
+	         <a href="javascript:void(0)" class="cblue" onclick="getdatas('云计算运维',1,'job_cloud')">
+		         <span class="fa fa-server fapo"></span>
+		         <span class="fontPo">云计算运维</span>
+	         </a>
+         </div>
+          <div class="pull-left checkboxs" id="job_iot">
+	         <a href="javascript:void(0)" class="cqing" onclick="getdatas('云计算开发',1,'job_iot')">
+		         <span class="fa fa-forumbee fapo"></span>
+		         <span class="fontPo">云计算开发</span>
+	         </a>
+         </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+</div>
+
+
+<div class="col-xs-12">
+<div class="panel panel-default panel-box">
+	<div class="panel-body">
+	<div class="col-md-12 col-xs-12">
+		 <div id="main" style="height: 1100px;width: 100%;"></div>
+		 </div>
+	</div>
+</div>
+</div>
+
+</div>
+</div>
+<#include '../common/javascripts.html'>
+<script src="${request.contextPath}/assets/javascripts/echarts3/echarts.min.js" type="text/javascript"></script>
+
+<script>
+	
+	$(function() {
+		$("#gwfx").addClass("liactive")
+		var tmp="<a href='${request.contextPath}/'>首页</a><span style='padding:0 10px'>&gt;</span><a href='${request.contextPath}/learning/index'>学情</a><span style='padding:0 10px'>&gt;</span><a href='javascript:void(0)'>岗位分析</a><span style='padding:0 10px'>&gt;</span><a href='javascript:void(0)'>岗位方向</a>"
+		$("#route").html(tmp);
+		getdatas("云计算运维","0") // 0为初始化
+		
+	})
+	
+	function getdatas(name,status,id){
+		if(status=="1"){
+			$(".checkboxs").removeClass("select");
+			$("#"+id).addClass("select");
+			}
+		var data={"param" : name};
+	 	$.ajax({
+			url : "${request.contextPath}/learning/getfullskill",
+			type : "post",
+			data : data,
+			success : function(s) {
+				if (s.success) { 
+					var categories=s.other.categories;
+					var skills=s.other.skills;
+					var weights=s.other.weights;
+					var data1=s.other.list1;
+					var data2=s.other.list2;
+					var myChart = echarts.init(document.getElementById('main'));
+					option = {
+							 
+						     tooltip : {
+							        // trigger: 'axis',
+							        showDelay : 0,
+							        formatter: '技能权重 : {c0}<br />使用技能 : {b0}'
+							    },
+// 						    legend: {
+// 						        data: ['技能']
+// 						    },
+						    grid: {
+						        left: '4%',
+						        x2:200,
+						        bottom: '3%',
+						        containLabel: true
+						    },
+						    xAxis: {
+						    	name : '权重百分比',
+						        type: 'value',
+						        boundaryGap: [0, 0.1],
+						        max: 250,
+					            interval: 10,
+						    },
+						    yAxis: {
+						    	name:'技能',
+						        type: 'category',
+						            data: data1,
+						            axisLabel:{  
+						                interval:0,//横轴信息全部显示  
+						                // rotate:90,//-30度角倾斜显示  
+										 textStyle:{
+							                 fontSize:9
+							            }
+						           } 
+						    },
+						    series: [
+						        {
+						            name: '技能',
+						            type: 'bar',
+						            data: data2
+						        }
+						    ]
+						};
+					    myChart.setOption(option);
+			 	}
+			} 
+		});
+		
+	}
+</script>
+
+</body>
+</html>

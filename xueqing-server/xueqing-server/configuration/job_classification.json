@@ -1,0 +1,37 @@
+{
+    "total": [
+        {
+            "industry": "cloud",
+            "classification": [
+                {
+                    "category": "sales",
+                    "keywords": "售,客户经理,客服,销"
+                },
+                {
+                    "category": "operation",
+                    "keywords": "运维,维护,数据库"
+                },
+                {
+                    "category": "other",
+                    "keywords": "实习,培训,讲师"
+                },
+                {
+                    "category": "framework",
+                    "keywords": "架构"
+                },
+                {
+                    "category": "market",
+                    "keywords": "产品,市场,数据分析"
+                },
+                {
+                    "category": "manage",
+                    "keywords": "经理,总监,管理,主管"
+                },
+                {
+                    "category": "develop",
+                    "keywords": "开发,程序,软件,测试,工程师,云计算,云"
+                }
+            ]
+        }
+    ]
+}

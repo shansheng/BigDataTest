@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<!-- Required Meta Tags Always Come First -->
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<#include '../common/stylesheets1.html'>
+<link href="${request.contextPath}/assets/stylesheets/pages/gwdata.css" rel="stylesheet">
+<link href="${request.contextPath}/assets/stylesheets/header.css" rel="stylesheet">
+<link href="${request.contextPath}/assets/stylesheets/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="${request.contextPath}/assets/javascripts/chosen.min.css">
+<title>斗学网-学情</title>
+<style>
+body {
+    padding: 0;
+    margin: 0;
+    font-family: "microsoft yahei"!important;
+    background: #f1f4f6;
+    min-width: 1400px;
+    height: 100%;
+    position: absolute!important;
+}
+</style>
+</head>
+<body>
+<div class="container-fluid">
+<#include '../learning/learnLeft.html'>
+<div class="main-right">
+<#include '../learning/learnHeader.html'>
+<div class="col-xs-12">
+<div class="panel panel-default panel-box">
+	<div class="panel-body">
+	<div class="col-xs-3">
+	<div class="form-group">
+	<label for="name">我的技能</label>
+		 <select  class="form-control" style="width:100%" id="skillsele">
+		 	<option value='0' >请选择技能</option>
+          	<option value='1' >OpenStack</option>
+          	<option value='1' >Docker</option>
+          	<option value='1' >Hadoop</option>
+          	<option value='1' >Spark</option>
+          	<option value='1' >Ansiable</option>
+          	<option value='1' >Puppet</option>
+          	<option value='1' >Chef</option>
+          	<option value='1' >Windows</option>
+          	<option value='1' >Linux/Unix</option>
+          	<option value='1' >CentOS</option>
+          	<option value='1' >Ubuntu</option>
+          	<option value='1' >RedHat</option>
+          	<option value='1' >Debian</option>
+          	<option value='1' >KVM</option>
+          	<option value='1' >阿里云</option>
+          	<option value='1' >腾讯云</option>
+          	<option value='1' >华为云</option>
+          	<option value='1' >Workstation</option>
+          	<option value='1' >ESXi</option>
+          	<option value='1' >Raid</option>
+          	<option value='1' >LVM</option>
+          	<option value='1' >NFS</option>
+          	<option value='1' >CIFS/Samba</option>
+          	<option value='1' >iSCSI</option>
+          	<option value='1' >zookeeper</option>
+          	<option value='1' >mapreduce</option>
+          	<option value='1' >mahout</option>
+          	<option value='1' >神经网络</option>
+          	<option value='1' >机器学习</option>
+          	<option value='1' >zigbee</option>
+          	<option value='1' >Swift</option>
+          	<option value='1' >Python</option>
+          	<option value='1' >Linux Shell</option>
+          	<option value='1' >HTML</option>
+          	<option value='1' >CSS</option>
+          	<option value='1' >Javascript</option>
+          	<option value='1' >Vue</option>
+          	<option value='1' >AnglarJS</option>
+          	<option value='1' >jquery</option>
+          	<option value='1' >Bootstrap</option>
+          	<option value='1' >AJAX</option>
+          	<option value='1' >JSON</option>
+          	<option value='1' >XML</option>
+          	<option value='1' >React</option>
+          	<option value='1' >MySQL</option>
+          	<option value='1' >Oracle</option>
+          	<option value='1' >MongeDB</option>
+          	<option value='1' >Hive</option>
+          	<option value='1' >Hbase</option>
+          	<option value='1' >SQL Server</option>
+          	<option value='1' >java</option>
+          	<option value='1' >Mybatis</option>
+          	<option value='1' >Hibernate</option>
+          	<option value='1' >Struts</option>
+          	<option value='1' >Shiro</option>
+          	<option value='1' >Spring</option>
+          	<option value='1' >Spring MVC</option>
+          	<option value='1' >Redis</option>
+          	<option value='1' >Memcache</option>
+          	<option value='1' >EhCache</option>
+          	<option value='1' >junit</option>
+          	<option value='1' >RabbitMQ</option>
+          	<option value='1' >ActiveMQ</option>
+          	<option value='1' >php</option>
+          	<option value='1' >scala</option>
+          	<option value='1' >go</option>
+          	<option value='1' >c/c++</option>
+          	<option value='1' >net/c#</option>
+          </select>
+          	 <div class="col-xs-12" style="display: none;">
+				<ul id="skill">
+				</ul>
+			</div>
+			<div class="col-xs-12" id="test" style="width: 100%;margin-top: 5px;">
+				
+			</div>
+          </div>
+		</div>
+		<div class="col-xs-2">
+		 <div class="form-group">
+		<label for="name">能力累计时间</label>
+		<select class="form-control" id="skilltime">
+			<option value='0'>请选择时间</option>
+			<option>1月</option>
+			<option>2月</option>
+			<option>3月</option>
+			<option>4月</option>
+			<option>5月</option>
+			<option>6月</option>
+			<option>7月</option>
+			<option>8月</option>
+			<option>9月</option>
+			<option>10月</option>
+			<option>11月</option>
+			<option>12月</option>
+			<option>13月</option>
+			<option>14月</option>
+			<option>15月</option>
+			<option>16月</option>
+			<option>17月</option>
+			<option>18月</option>
+			<option>19月</option>
+			<option>20月</option>
+			<option>21月</option>
+			<option>22月</option>
+			<option>23月</option>
+			<option>24月</option>
+			<option>25月</option>
+			<option>26月</option>
+			<option>27月</option>
+			<option>28月</option>
+			<option>29月</option>
+			<option>30月</option>
+			<option>31月</option>
+			<option>32月</option>
+			<option>33月</option>
+			<option>34月</option>
+			<option>35月</option>
+			<option>36月</option>
+			<option>37月</option>
+			<option>38月</option>
+			<option>39月</option>
+			<option>40月</option>
+			<option>41月</option>
+			<option>42月</option>
+			<option>43月</option>
+			<option>44月</option>
+			<option>45月</option>
+			<option>46月</option>
+			<option>47月</option>
+			<option>48月</option>
+			<option>49月</option>
+			<option>50月</option>
+			<option>51月</option>
+			<option>52月</option>
+			<option>53月</option>
+			<option>54月</option>
+			<option>55月</option>
+			<option>56月</option>
+			<option>57月</option>
+			<option>58月</option>
+			<option>59月</option>
+			<option>60月</option>
+		</select>
+          	<ul id="values">
+			</ul>
+		</div></div>
+		<div class="col-xs-1" style="margin-top: 28px;" id="sure">
+			<input type="image" src="${request.contextPath}/assets/images/jiahao.png" onclick="sub()" />
+			<!-- <button type="button" class="btn btn-primary" onclick="clear()">清除</button> -->
+		</div>
+		<div class="col-xs-6">
+		  <div id="main" style="width: 100%;height:400px"></div>
+		</div>
+	</div>
+</div>
+</div>
+ <div class="col-xs-12" style="text-align: center;">
+	<button class="btn btn-primary" onclick="confirm()">搜索</button>
+</div> 
+
+<div class="col-xs-12">
+<div class="panel panel-default panel-box">
+
+	<div class="panel-body">
+	<div class="col-xs-12" style="border: 1px" id="gw">
+<!-- 		<div class="row" style="border: 1px solid #DAD6D6; padding: 6px ;margin-top: 5px;margin-right: 0px;margin-left: 0px;"> -->
+<!-- 			<div class="col-xs-4" style="margin-top: 20px"> -->
+<!-- 				<div class="col-xs-12 row"> -->
+<!-- 					<a href="">XXX工程师</a> -->
+<!-- 				</div> -->
+<!-- 			<div class="col-xs-12 row"> -->
+<!-- 				<div class="company" style="margin:10px 0"> -->
+<!-- 					<span  style="color: #333">南京第五十五所技术开发有限公司</span> -->
+					
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 			<div class="col-xs-12 row"> -->
+				
+<!-- 				<div class="company" style="margin:10px 0;">国企&nbsp;| &nbsp;员工2人&nbsp;| &nbsp;工作地点:&nbsp;江苏&nbsp;无锡</div> -->
+<!-- 			</div> -->
+<!-- 			</div> -->
+<!-- 			<div class="col-xs-4"> -->
+<!-- 				<div class="echart" id="echarts" name="echarts" style="width: 100%;height: 200px;"></div> -->
+<!-- 			</div> -->
+<!-- 			<div class="col-xs-4" style="margin-top: 5%"> -->
+<!-- 				<div class="col-xs-12 row" style=" float: left;margin-top: 6px"> -->
+<!-- 					<div class="col-xs-3"></div> -->
+<!-- 					<a class="btn col-xs-4 btn-primary" style="text-align: center;">匹配图谱</a> -->
+<!-- 					<div class="col-xs-1"></div> -->
+<!-- 					<a class="btn col-xs-4 btn-primary" style="text-align: center;" onclick="apply()">关注</a> -->
+<!-- 	             <div class="col-xs-1"></div> -->
+<!-- 			</div> -->
+<!-- 			</div> -->
+<!-- 		</div>								 -->
+		</div>
+		
+	
+	</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+<#include '../common/javascripts.html'>
+<script src="${request.contextPath}/assets/javascripts/echarts3/echarts.min.js" type="text/javascript"></script>
+<script src="${request.contextPath}/assets/javascripts/chosen.jquery.min.js"></script>
+
+<script>
+$(function() {
+	$("#jytj").addClass("liactive")
+	var tmp="<a href='${request.contextPath}/'>首页</a><span style='padding:0 10px'>&gt;</span><a href='${request.contextPath}/learning/index'>学情</a><span style='padding:0 10px'>&gt;</span><a href='javascript:void(0)'>就业分析</a><span style='padding:0 10px'>&gt;</span><a href='javascript:void(0)'>就业情况</a>"
+		$("#route").html(tmp);
+	$(".chzn-select").chosen();
+
+})
+
+
+
+function sub() {
+	var skill=$("#skillsele").val();
+	var skilltime=$("#skilltime").val();
+	if(skill==0){
+		alert("请选择技能");
+		return false;
+	}
+	if(skilltime==0){
+		alert("请选择技能累计时间");
+		return false;
+	}
+	var skillselect=$("#skillsele").find("option:selected").text();
+	var skilltimeselect=$("#skilltime").find("option:selected").text();
+	var key_=[];
+	$("#skill").each(function () {  
+        //var tmp;  
+ 
+        $(this).find('li').each(function() {  
+          //tmp = $(this).text();  
+           
+          key_.push($(this).text());  
+        });  
+ 
+     });  
+	for (var i = 0 ; i < key_.length; i++) {
+		var paramskill_=key_[i].split("-")[0];
+		if(paramskill_==skillselect){
+			alert("技能选择重复");
+			return false;
+		}
+	}
+	var livalue=skillselect+"-"+skilltimeselect;
+	var _html="";
+	_html+="<li class='"+livalue+"'>"+livalue+"</li>";
+	$("#skill").append(_html);
+	console.log(livalue);
+	//var html1="<button id=\""+livalue+"\"  onclick=\"clear("+livalue+")\">"+livalue+" x</button>";
+	var html2="<input type='button' id='"+livalue+"' value=\""+livalue+" x\" onclick=test(\""+livalue+"\"); \/>"
+	$("#test").append(html2);
+}
+
+function test(str) {
+	var id1="."+str;
+	var id2="#"+str;
+	$(id1).remove();
+	$(id2).remove();
+}
+
+
+function rader(max,name){
+	this.max=max;
+	this.name=name;
+}
+
+function confirm(){
+	var key=[];
+	
+	$("#skill").each(function () {  
+        //var tmp;  
+ 
+        $(this).find('li').each(function() {  
+          //tmp = $(this).text();  
+           
+          key.push($(this).text());  
+        });  
+ 
+     });  
+	 //遍历该数组可以获取所有值  
+	 var html="";
+	 var s="";
+	 var datas1=[];
+	 var datas2=[];
+	 if(key.size==0){
+		 alert("请选择技能");
+			return false;
+	 }
+    for (var i = 0 ; i < key.length; i++) {  
+         var paramskill=key[i].split("-")[0];
+         var paramday=key[i].split("-")[1].substring(0,1);
+         datas2.push(paramday);
+         myrader=new rader(60,paramskill);
+         datas1.push(myrader);
+         html+=paramskill+",";
+    }  
+	if(html==null || html==""){
+		alert("请选择技能");
+		return false;
+	}
+    var chart = echarts.init(document.getElementById('main')); 
+    option = {
+    	    tooltip: {},
+    	    legend: {
+    	        data: ['能力累计时间']
+    	    },
+    	    radar: {
+    	        // shape: 'circle',
+    	        name: {
+    	            textStyle: {
+    	                color: '#000',
+    	           }
+    	        },
+    	        indicator: datas1
+    	    },
+    	    series: [{
+    	       
+    	        type: 'radar',
+    	        // areaStyle: {normal: {}},
+    	        data : [
+    	            {
+    	                value : datas2,
+    	                name : '能力累计时间'
+    	            }
+    	        ]
+    	    }]
+    	};
+    chart.setOption(option);
+
+
+
+	$.ajax({
+		url : "${request.contextPath}/learning/getjytj",
+		type : "post",
+		data : {
+			html : html
+		},
+		success : function(s) {
+			var job=s.msg.job;
+			if(job.length==0){
+				alert("暂无推荐岗位");
+			}else{
+			var str = "";
+			for(var i=0;i<job.length;i++){
+				var jobname = job[i].jobname;
+				var localtion = job[i].localtion;
+				var companyname = job[i].companyname;
+				var description = job[i].description;
+				str+="<div class=\"row\" style=\"border: 1px solid #DAD6D6; padding: 6px ;margin-top: 5px;margin-right: 0px;margin-left: 0px;\">";
+				str+="<div class=\"col-xs-4\" style=\"margin-top: 20px\">";
+				str+="<div class=\"col-xs-12 row\">";
+				str+="<a>" + jobname + "</a>";
+				str+="</div>";
+				str+="<div class=\"col-xs-12 row\">";
+				str+="<div class=\"company\" style=\"margin:10px 0\">";
+				str+="<span  style=\"color: #333\">" + companyname + "</span>";
+				str+="</div>";
+				str+="</div>";
+				str+="<div class=\"col-xs-12 row\">";
+				str+="<div class=\"company\" style=\"margin:10px 0;\">" + localtion + "</div>";
+				str+="</div>";
+				str+="</div>";
+				str+="<div class=\"col-xs-4\">";
+				str+="<div class=\"echart\" id=\"echarts"+i+"\" name=\"echarts\" style=\"width: 100%;height: 200px;\"></div>";
+				str+="</div>";
+				str+="<div class=\"col-xs-4\" style=\"margin-top: 5%\">";
+				str+="<div class=\"col-xs-12 row\" style=\" float: left;margin-top: 6px\">";
+				str+="<div class=\"col-xs-3\"></div>";
+				str+="<div class=\"col-xs-1\"></div>";
+				str+="<a class=\"btn col-xs-4 btn-primary\" id=\"apply"+i+"\" style=\"text-align: center;\" onclick=\"apply('"+i+"')\">关注</a>";
+				str+="<div class=\"col-xs-1\"></div>";
+				str+="</div>";
+				str+="</div>";
+				str+="</div>";
+			}
+			$("#gw").html(str);
+			var rader=s.msg.rader;
+			var value=s.msg.values;
+			for(var i=0;i<rader.length;i++){
+				echartjob="echarts"+i;
+				myChartjob = echarts.init(document.getElementById(echartjob));
+				optionjob= {
+			 	    tooltip: {},
+				   
+			 	    radar: {
+			 	        // shape: 'circle',
+			 	        name: {
+			 	            textStyle: {
+			 	                color: '#000',
+			 	           }
+			 	        },
+			 	        indicator: rader[i]
+			 	    },
+			 	    series: [{
+				       
+			 	        type: 'radar',
+			 	        // areaStyle: {normal: {}},
+			 	        data : [
+			 	            {
+			 	                value : value[i],
+			 	                name : '能力累计时间'
+			 	            }
+			 	        ]
+			 	    }]
+			 	};
+				myChartjob.setOption(optionjob);	
+//---------------------------------------------------------------------------------------
+
+			}
+			}
+		}
+	});
+}
+function apply(id){
+	alert("已关注");
+	$("#apply"+id).attr("disabled", true);
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+<#include '../common/javascripts.html'>
+<div class="header" style="padding: 0 30px;">
+<div class="pull-left" style="line-height: 60px;" id="route"></div>
+			<ul class="nav navbar-nav navbar-right top-right">
+				<#if user??>
+				<li class="dropdown hidden-lt-ie8" id="openinfor" onMouseOver="toggleshow()" onMouseOut="togglehide()">
+				<a class="dropdown-toggle dropdown-a pd0" style="background-color: #fff;" href="javascript:void(0)" id="uname" data-toggle="dropdown"> 
+				<input type="hidden" value="${(user.realname)!(user.username)}" id="uname1"/>
+				    ${(user.realname)!(user.username)}
+				</a>
+					<ul class="dropdown-menu" id="toggleinfor">
+					   <li>
+					     <div class="menu-header">
+					      <div class="pull-left headerbox"> 
+					         <div class="headerboxname">${(user.realname)!(user.username)}</div>
+					      </div>
+					      <div class="clearfix"></div>
+					     </div>
+					      </li>
+					       <li>
+					      <div class="menu-body">
+					      <div class="clearfix"></div>
+					     </div>
+					   </li>
+					   <li><div id="lastcourse" style="padding:8px;padding-bottom:20px;"></div></li>
+					   <li class="logout" onclick="cancel()"><a href="${request.contextPath}/course/logout">退出登录</a></li>
+
+					 <#else>
+				<li>
+				<a class="fs14" href="${request.contextPath}/course/tologin" style="background:#fff;    padding: 19px 6px !important;">登录</a>
+				</li>
+				</#if>				
+			</ul></li></ul>
+			<div class="clearfix"></div>
+</div>

@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html>
+<!--<![endif]-->
+<head>
+<title>斗学网-学情</title>
+<meta name="keywords"
+	content="一道云，云课堂，MOOC,慕课,在线学习,在线教育,大规模开放式在线课程,网络公开课,视频公开课,高职mooc,中职mooc" />
+<meta name="description"
+	content="一道云课堂 是先电打造的在线学习平台，每一个有提升愿望的人，都可以在这里学习中国最好的中高职课程，学完还能获得认证证书。一道云课堂是国内最好的中高职MOOC学习平台，拥有来自于多所高校的顶级课程，最好最全的中高职课程，与名师零距离。" />
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="shortcut icon" type="image/ico" href="${request.contextPath}/assets/images/favicon.ico" />
+<link rel="stylesheet" href="${request.contextPath}/assets/stylesheets/swiper.min.css">
+<#include '../common/stylesheets1.html'>
+<style>
+body {
+	background: #EFEFEF !important;
+}
+
+.carousel {
+	top: -20px
+}
+
+#site-navbar {
+	margin-bottom: 0px !important
+}
+
+.zp-title {
+	font-size: 16px;
+	color: #4c5157;
+	margin-bottom: 5px;
+	text-align: center
+}
+
+.zp-title-tab {
+	margin-right: 40px;
+	padding: 5px;
+	font-weight: bold;
+	font-size: 24px;
+	color: #000
+}
+
+.zp-content {
+	margin-top: 10px
+}
+
+.course-style {
+	margin: 20px 0px;
+	text-decoration: none;
+	overflow: hidden
+}
+
+.course-box {
+	display: block;
+	position: relative;
+	min-height: 220px;
+	margin: 0;
+	background: #fff;
+}
+
+.course-img {
+	overflow: hidden
+}
+
+/* .course-body {
+	padding: 5% 5% 0;
+} */
+.course-title-index {
+	color: #4c5157;
+	font-size: 15px;
+	overflow: hidden;
+	float: left;
+	font-weight: 600;
+	height: 45px;
+	text-align: left
+}
+
+.course-title-xz {
+	float: right;
+	padding: 3px 10px;
+	color: #fff;
+	border-radius: 100px;
+	background-color: #59CF4A;
+}
+
+.course-box .course-footer {
+	width: 100%;
+	color: #9B9DA2;
+	padding: 10px 5% 10px 5%;
+}
+
+.course-num {
+	float: left;
+	font-size: 12px;
+	padding-right: 25px
+}
+
+.course-update-status {
+	float: right;
+	font-size: 12px;
+	padding-right: 5px
+}
+
+.more {
+	font-size: 14px;
+	color: #7B7F88;
+	display: inline-block;
+	margin-top: 25px;
+}
+
+.course-progress-bar {
+	width: 100%;
+	height: 5px;
+	background-color: #eee
+}
+
+.course-progress-bar>div {
+	background-color: #5ac65a;
+	box-shadow: none
+}
+
+.orgimg {
+	margin-top: -12px;
+	margin-right: 7px;
+	/* border-radius: 50%; */
+	width: 50px;
+	height: 40px;
+}
+
+.spec {
+	width: 85px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.mbl {
+	margin-bottom: -20px
+}
+
+.swiper-container {
+	width: 100%;
+	height: 500px;
+	margin-left: auto;
+	margin-right: auto;
+	background: none;
+}
+
+.swiper-slide {
+	text-align: center;
+	font-size: 18px;
+	background: #f3f5f6;
+	/* Center slide text vertically */
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	align-items: center;
+}
+
+.swiper-button-next {
+	background-image: url("${request.contextPath}/assets/images/right.png");
+	width: 60px;
+	height: 60px;
+}
+
+.swiper-button-prev {
+	background-image: url("${request.contextPath}/assets/images/left.png");
+	width: 60px;
+	height: 60px;
+}
+.voal{
+	margin-top:17px;
+	text-align:center;
+	/* border:2px solid #a1a1a1; */
+	padding:5px 5px; 
+	/* border-radius:25px;
+	-moz-border-radius:25px; */
+	font-size:24px;
+	font-family: Microsoft Yahei;
+	height:46px;
+	color:black;
+	-webkit-font-smoothing: antialiased;
+	background:#EBEBEB;
+	/* vertical-align:middle; */
+}
+.txt{
+	font-size:17px;
+	margin-top: 23px;
+	font-family: Microsoft Yahei;
+	-webkit-font-smoothing: antialiased;
+}
+.con{
+	margin-top: 43px;
+}
+.tit{
+	font-size:20px;
+	margin-top: 60px;
+	font-family: Microsoft Yahei;
+	-webkit-font-smoothing: antialiased;
+}
+.detail{
+	background: transparent;
+	font-size:17px;
+	font-family: Microsoft Yahei;
+	-webkit-font-smoothing: antialiased;
+	width:172px;
+	height:45px;
+	border-radius:25px;
+	border-color:#0296DE;
+	color:#0296DE;
+}
+.content{
+	width:150px;
+	height:65px;
+	padding-top: 11px;
+	padding-left: 16px; 
+	font-size:16px;
+	font-family: Microsoft Yahei;
+	-webkit-font-smoothing: antialiased;
+	background:#0296DE;
+	color:white;
+}
+.main{
+	height:562px;
+}
+
+
+.rBox{
+    position: fixed;
+    bottom: 260px;
+    right: 23px;
+    width: 61px;
+    height: 140px;
+    background: #FFFFFF;
+    border: 1px solid #ECECEC;
+    color:#333!important
+}
+
+.one {    
+    width: 20px;    
+    margin: 0 auto;    
+    line-height: 20px;    
+    font-size: 16px; 
+     color:#333!important 
+}  
+</style>
+</head>
+<body class="homepage">
+	<#include '../common/header.html'>
+	<!--IT岗位群分析 ------------------------------------------------------------start  -->
+	<div class="row"
+		style="background:url('${request.contextPath}/assets/images/index1.png'); padding-top: 46px; padding-bottom: 46px;margin-top:-20px">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-6">
+					<div class="row"><h1 style="font-size:41px;">岗位分析</h1></div>
+					<div class="row voal" style="width:343px;">分析市场对于人才的需求情况</div>
+					<div class="row txt">按周期抓取互联网的招聘岗位信息，对抓取的数据进行清洗；<br>
+					对维度的分析数据，展示岗位种类、地区分布、薪资、学历、经验等；<br>
+					量化专业方向与岗位技能要求之间的关联。
+					</div>
+					<div class="row con"><button type="button" class="btn btn-default btn-lg detail" onclick="sys('gw')">查看详情</button></div>
+					<div class="row tit">当前分析的内容：</div>
+					<div class="row" style="margin-top: 23px;"> 
+						<div class="col-xs-4 content" style="">岗位总类<br><span style="font-size: 25px;">6</span>&nbsp;&nbsp;类</div>
+						<div class="col-xs-4 content" style="margin-left: 26px;">岗位总数量<br><span style="font-size: 25px;">${alljobs}</span>&nbsp;&nbsp;个</div>
+						<div class="col-xs-4 content" style="margin-left: 26px;">岗位分析<br><span style="font-size: 25px;" id="count"></span>&nbsp;&nbsp;个</div>
+						
+					</div>
+				</div>
+				<div class="col-xs-6 main" id="main1"></div>
+			</div>
+		</div>
+	</div>
+	<!--IT岗位群分析 ------------------------------------------------------------end  -->
+	
+	<!--专业培养情况 ------------------------------------------------------------start  -->
+	<div class="row"
+		style="background:url('${request.contextPath}/assets/images/index2.png'); padding-top: 46px; padding-bottom: 46px;">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-6">
+					<div class="row"><h1 style="font-size:41px;">专业分析</h1></div>
+					<div class="row voal" style="width:400px;">专业设置、专业定义、专业考核</div>
+					<div class="row txt">培养方案数字化，帮助学生确定学习方向和目标技能；<br>
+					各院校培养目标之间的对比分析及与市场人才需求的匹配情况；<br>
+					指导院校根据真实市场需求制定专业方向、课程体系和考核指标。
+					</div>
+					<div class="row con"><button type="button" class="btn btn-default btn-lg detail" onclick="sys('zy')">查看详情</button></div>
+					<div class="row tit">当前分析的内容：</div>
+					<div class="row" style="margin-top: 23px;"> 
+						<div class="col-xs-6 content" style="margin-left: 26px;width:241px;">专业<br><span style="font-size: 20px;">云计算技术与应用</span></div>
+						<div class="col-xs-6 content" style="width:160px;margin-left: 26px;">院校<br><span style="font-size: 25px;">10</span>&nbsp;&nbsp;所</div>
+					</div>
+				</div>
+				<div class="col-xs-6 main" id="main2"></div>
+			</div>
+		</div>
+	</div>
+	<!--专业培养情况 ------------------------------------------------------------end  -->
+	
+	<!--学生能力分析 ------------------------------------------------------------start  -->
+	<div class="row"
+		style="background:url('${request.contextPath}/assets/images/index1.png'); padding-top: 46px; padding-bottom: 46px;">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-6">
+					<div class="row"><h1 style="font-size:41px;">学情分析</h1></div>
+					<div class="row voal" style="width:340px;">面向一个专业学生的学情分析</div>
+					<div class="row txt">跟踪并分析学生的学习情况；<br>
+					定义学生评价体系，将学生数据可视化；<br>
+					对学生的技能水平和综合能力进行评估。
+					</div>
+					<div class="row con"><button type="button" class="btn btn-default btn-lg detail" onclick="sys('xq')">查看详情</button></div>
+					<div class="row tit">当前分析的内容：</div>
+					<div class="row" style="margin-top: 23px;"> 
+						<div class="col-xs-3 content" style="width:160px;">专业<br><span style="font-size: 25px;">5</span>&nbsp;&nbsp;个</div>
+						<div class="col-xs-3 content" style="margin-left: 26px;width:160px;">班级<br><span style="font-size: 25px;">72</span>&nbsp;&nbsp;个</div>
+						<div class="col-xs-3 content" style="margin-left: 26px;width:160px;">学生<br><span style="font-size: 25px;">350</span>&nbsp;&nbsp;名</div>
+						
+					</div>
+				</div>
+				<div class="col-xs-6 main" id="main3"></div>
+			</div>
+		</div>
+	</div>
+	<!--学生能力分析 ------------------------------------------------------------end  -->
+	
+	
+	<!--教学过程跟踪 ------------------------------------------------------------start  -->
+	<div class="row"
+		style="background:url('${request.contextPath}/assets/images/index2.png'); padding-top: 46px; padding-bottom: 46px;">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-6">
+					<div class="row"><h1 style="font-size:41px;">教学分析</h1></div>
+					<div class="row voal" style="width:376px;">面向教师和课程的教学情况分析</div>
+					<div class="row txt">课程统计分析，跟踪记录课程的开班情况和数据；<br>
+					老师开课情况分析，开课进度、课程评价、班级人数和平均成绩等；<br>
+					跟踪班级学生的整体学习情况，出勤率、作业提交等。
+					</div>
+					<div class="row con"><button type="button" class="btn btn-default btn-lg detail" onclick="sys('jx')">查看详情</button></div>
+					<div class="row tit">当前分析的内容：</div>
+					<div class="row" style="margin-top: 23px;"> 
+						<div class="col-xs-3 content" style="width:160px;">课程<br><span style="font-size: 25px;">28</span>&nbsp;&nbsp;门</div>
+						<div class="col-xs-3 content" style="margin-left: 26px;width:160px;">开班<br><span style="font-size: 25px;">126</span>&nbsp;&nbsp;次</div>
+						
+					</div>
+				</div>
+				<div class="col-xs-6 main" id="main4"></div>
+			</div>
+		</div>
+	</div>
+	<!--教学过程跟踪 ------------------------------------------------------------end  -->
+
+	<!--就业情况分析 ------------------------------------------------------------start  -->
+	<div class="row"
+		style="background:url('${request.contextPath}/assets/images/index1.png'); padding-top: 46px; padding-bottom: 46px;">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-6">
+					<div class="row"><h1 style="font-size:41px;">就业分析</h1></div>
+					<div class="row voal" style="width:335px;">就业市场校验专业设置和教学</div>
+					<div class="row txt">收集已就业学生的在岗情况；薪资、地区、主要技能等；<br>
+					与院校培养目标进行对比和分析，旨在提升教学质量；<br>
+					根据个人技术能力和就业意向，推荐合适的岗位和企业。
+					</div>
+					<div class="row con"><button type="button" class="btn btn-default btn-lg detail" onclick="sys('jy')">查看详情</button>&nbsp;&nbsp;
+					
+					</div>
+					<div class="row tit">当前分析的内容：</div>
+					<div class="row" style="margin-top: 23px;"> 
+						
+						<div class="col-xs-3 content" style="width:160px;">院校<br><span style="font-size: 25px;">10</span>&nbsp;&nbsp;所</div>
+						<div class="col-xs-3 content" style="margin-left: 26px;width:160px;">已就业学生<br><span style="font-size: 25px;">${totalman}</span>&nbsp;&nbsp;名</div>
+						<div class="col-xs-3 content" style="margin-left: 26px;width:160px;">就业对口率<br><span style="font-size: 25px;">${match}</span></div>
+						
+					</div>
+				</div>
+				<div class="col-xs-6 main" id="main5"></div>
+			</div>
+		</div>
+	</div>
+	<!--就业情况分析 ------------------------------------------------------------end  -->
+	<a class="rBox" href="${request.contextPath}/learning/survey">
+	<img src="${request.contextPath}/assets/images/jydy.png" style="margin: 10px 16px;width: 25px;height: 25px;position: relative;"/>
+	<div class="one">就业调研</div>  
+	</a>
+ 	<#include '../common/footer.html'> 
+ 	<#include '../common/javascripts.html'>
+	<script type="text/javascript" src="${request.contextPath}/assets/javascripts/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="${request.contextPath}/assets/javascripts/bootstrap/bootstrap.min.js"></script>
+	<script src="${request.contextPath}/assets/javascripts/swiper.min.js"></script>
+	<script src="${request.contextPath}/assets/javascripts/echarts.min.js"></script>
+	<script type="text/javascript">
+	function research() {
+		window.location.href="${request.contextPath}/learning/survey";
+	}
+	
+	function sys(name) {
+		if(name=='gw'){
+		window.location.href="${request.contextPath}/learning/gwdata"
+		}
+		else if(name=='zy'){
+			window.location.href="${request.contextPath}/learning/schoolfa"
+		}
+		else if(name=='xq'){
+			window.location.href="${request.contextPath}/learning/stuzy"
+		}
+		else if(name=='jx'){
+			window.location.href="${request.contextPath}/learning/teapj"
+		}
+		else{
+			window.location.href="${request.contextPath}/learning/stujob"
+		}
+	}
+	var myChart1 = echarts.init(document.getElementById('main1')); 
+	var myChart2 = echarts.init(document.getElementById('main2')); 
+	var myChart3 = echarts.init(document.getElementById('main3')); 
+	var myChart4 = echarts.init(document.getElementById('main4'));  
+	var myChart5 = echarts.init(document.getElementById('main5'));
+	//岗位统计-----------------------------------------------------------------------start
+	$.ajax({
+	          url:"${request.contextPath}/learning/jobPie",
+	          type:"post",
+	          success : function(s) {
+	        	  if (s.success)
+        		  {
+        		  	var json = s.other;
+        		  	var total=json.total;
+        		  	var obj=json.echartsObjs;
+        		  	$("#count").text(total);
+        		  	var option1 = {
+        				    tooltip : {
+        				        trigger: 'item',
+        				        formatter: "{a} <br/>{b} : {c} ({d}%)"
+        				    },
+        				    calculable : true,
+        				    series : [
+        				       
+        				        {
+        				            name:'岗位群',
+        				            type:'pie',
+        				            radius : [25, 130],
+        				            center : ['50%', '50%'],
+        				            roseType : 'area',
+        				            label: {//线条引出的文字标签    
+        			                    normal: {    
+        			                        textStyle: {    
+        			                            color: '#383838'//标签文字颜色    
+        			                        }    
+        			                    }    
+        			                },    
+        			                labelLine: {//标签连接的线条    
+        			                    normal: {//默认状态    
+        			                        lineStyle: {    
+        			                            color: '#CACACA'//线条颜色    
+        			                        },    
+        			                       
+        			                    }    
+        			                },    
+        				            data:obj
+        				        }
+        				    ]
+        				};
+        			myChart1.setOption(option1);
+        		  }
+	          }	
+			});
+        			//折线图
+        	$.ajax({
+				url : "${request.contextPath}/learning/contrast",
+				type : "post",
+				//data : data,
+				success : function(s){
+				if(s.success){
+				var schools=s.other.schools.school;
+				var linObjs=s.other.schools.linObjs;
+				var skill=s.other.skill;
+				var option2= {
+						   
+					    tooltip: {
+					        trigger: 'axis'
+					    },
+					    grid: {
+					        left: '0%',
+					        right: '2%',
+					        bottom: '3%',
+					        containLabel: true
+					    },
+					   
+					    xAxis:  {
+					        type: 'category',
+					        boundaryGap: false,
+					        data: skill
+					    },
+					    yAxis: {
+					        type: 'value',
+					       
+					    },
+					    series: linObjs
+					};
+				myChart2.setOption(option2);
+			}
+			
+		}
+		
+	})
+        			//柱状图
+        			$.ajax({
+		url : "${request.contextPath}/learning/getstujl",
+		type : "post",
+		data : {
+			
+		},
+		success : function(s) {
+			var list = s.msg;
+			var vce = s.other.vce;
+			var year = s.other.year;
+			var option3 = {
+				    grid: {
+				        left: '10%',
+				        right: '14%',
+				        bottom: '3%',
+				        containLabel: true
+				    },
+				    tooltip : {
+				        // trigger: 'axis',
+				        showDelay : 0,
+				        formatter : function (params) {
+				            if (params.value.length > 1) {
+				                return params.value[2] + ' :<br/>'
+				               +'综合能力评估分:' + params.value[0] + '<br/>'
+				                +'专业技术能力值:' + params.value[1] ;
+				            }
+				            else {
+				                return 
+				               '综合能力评估分:<br/>'
+				                +'专业技术能力值:' ;
+				            }
+				        },
+				        axisPointer:{
+				            show: true,
+				            type : 'cross',
+				            lineStyle: {
+				                type : 'dashed',
+				                width : 1
+				            }
+				        }
+				    },
+				  
+				    legend: {
+				        data: vce,
+				        left: 'center'
+				    },
+				    xAxis : [
+				        {
+				        	name : '(专业技术)',
+				            type : 'value',
+				            scale:true,
+				            axisLabel : {
+				                formatter: '{value}'
+				            },
+				            splitLine: {
+				                show: true
+				            }
+				        }
+				    ],
+				    yAxis : [
+				        {
+				        	name : '(综合能力评估分值)',
+				            type : 'value',
+				            scale:true,
+				            axisLabel : {
+				                formatter: '{value}'
+				            },
+				            splitLine: {
+				                show: true
+				            }
+				        }
+				    ],
+				    series : list
+				};
+			myChart3.setOption(option3);
+		}
+	});
+        			//柱状图 多
+        	$.ajax({
+		url : "${request.contextPath}/learning/getbroleline",
+		type : "post",
+		data : {
+			course : "JavaWeb云应用开发"
+		},
+		success : function(s) {
+			var res = s.msg[0];
+			var dname = res.split(",");
+			var rezy = JSON.parse(s.msg[1]);
+			var rekc = JSON.parse(s.msg[2]);
+			var rejx = JSON.parse(s.msg[3]);
+
+			option4 = {
+
+				    tooltip : {
+				        trigger: 'axis',
+				        axisPointer: {
+				            type: 'cross',
+				            label: {
+				                backgroundColor: '#6a7985'
+				            }
+				        }
+				    },
+				    legend: {
+				        data:['专业技能','课程设计','教学方法']
+				    },
+				  
+				    grid: {
+				     	x:40,
+						x2:40,
+				       	y:25,
+				        containLabel: true
+				    },
+				    xAxis : [
+				        {
+				            type : 'category',
+				            boundaryGap : false,
+				            data : dname
+				        }
+				    ],
+				    yAxis : [
+				        {
+				            type : 'value'
+				        }
+				    ],
+				    series : [
+				        {
+				            name:'专业技能',
+				            type:'line',
+				            stack: '总量',
+				            areaStyle: {normal: {}},
+				            data:rezy
+				        },
+				        {
+				            name:'课程设计',
+				            type:'line',
+				            stack: '总量',
+				            areaStyle: {normal: {}},
+				            data:rekc
+				        },
+				        {
+				            name:'教学方法',
+				            type:'line',
+				            stack: '总量',
+				            areaStyle: {normal: {}},
+				            data:rejx
+				        }
+				    ]
+				};
+			myChart4.setOption(option4);
+		}
+	});
+        			
+        			//雷达
+        			$.ajax({
+		url : "${request.contextPath}/learning/getjob",
+		type : "post",
+		//data : data,
+		success : function(s) {
+				if(s.success){
+					var total=s.other;
+					var natruepie=total.natruepie;
+					var scalepie=total.scalepie;
+					var jobnamepie=total.jobnamepie;
+					var salarypie=total.salarypie;
+					var propie=total.propie;
+					var isjoinpie=total.isjoinpie;
+					var industrypie=total.industrypie;
+					var ismatchpie=total.ismatchpie;
+					var skillnames=total.skillnames;
+					var skillvalues=total.skillvalues;
+					var schools=total.schools;
+					var matchValues=total.matchValues;
+					var option5 = {
+							  grid: {
+							        left: '0%',
+							        right: '0%',
+							        bottom: '3%',
+							        containLabel: true
+							    },
+						    tooltip: {
+						        trigger: 'axis',
+						        axisPointer: {
+						            type: 'cross',
+						            crossStyle: {
+						                color: '#999'
+						            }
+						        }
+						    },
+						   
+						    legend: {
+						        data:['就业率','就业对口率'],
+						        right:'8%'
+						    },
+						    xAxis: [
+						        {
+						            type: 'category',
+						            data: schools,
+						            axisPointer: {
+						                type: 'shadow'
+						            },
+						            axisLabel: {  
+						            	   interval:0,  
+						            	   rotate:-30  
+						            	} 
+						        }
+						    ],
+						    yAxis: [
+						        {
+						            type: 'value',
+						            name: '就业率',
+						            min: 0,
+						            max: 100,
+						            interval: 20,
+						            axisLabel: {
+						                formatter: '{value}%'
+						            }
+						        },
+						        {
+						            type: 'value',
+						            name: '就业对口率',
+						            min: 0,
+						            max: 100,
+						            interval: 20,
+						            axisLabel: {
+						                formatter: '{value} %'
+						            }
+						        }
+						    ],
+						    series: [
+						             
+						        {
+						            name:'就业率',
+						            type:'line',
+						            data:[92.0, 92.2, 83.3,94.5, 86.3, 99.2,92.0, 92.2, 83.3,94.5, 86.3, 99.2,99.4],
+						            itemStyle: {   
+						                //通常情况下：
+						                normal:{  
+					                      color:'#b9bfd1'
+						                    }
+						                }
+						        },
+						        
+						        {
+						            name:'就业对口率',
+						            type:'line',
+						            yAxisIndex: 1,
+						            data:matchValues,
+						            itemStyle: {   
+						                //通常情况下：
+						                normal:{  
+					                      color:'#ff7f17'
+						                    }
+						                }
+						        }
+						    ]
+						};
+					myChart5.setOption(option5);
+				}
+				
+		}
+		
+	})
+        			
+        	
+	//岗位统计-----------------------------------------------------------------------end
+	
+	//专业分析 -----------------------------------------------------------------------start
+	/* var myChart2 = echarts.init(document.getElementById('main2'));
+	myChart2.setOption(option2); */
+
+	//专业分析 -----------------------------------------------------------------------end
+	//学情分析
+	
+	//教学
+	//就业
+	
+	
+		var u = navigator.userAgent, app = navigator.appVersion;
+		var a = u.indexOf('Trident');
+		if (u.indexOf('Trident') > -1) {
+			/* alert('请切换至极速模式浏览') */
+			if (!+'\v1' && !'1'[0]) {
+				alert("系统检测到您浏览器版本过低，可能会影响到您浏览页面建议使用极速模式浏览")
+			}
+			if (navigator.appVersion.match(/8./i) == "8.") {
+				alert("系统检测到您浏览器版本过低可能会影响到您浏览页面效果，建议使用'极速模式'浏览")
+			}
+		}
+
+		var swiper = new Swiper('.swiper-container', {
+			pagination : '.swiper-pagination',
+			nextButton : '.swiper-button-next',
+			prevButton : '.swiper-button-prev',
+			slidesPerView : 1,
+			paginationClickable : true,
+			spaceBetween : 30,
+			loop : true
+		});
+			
+		$(function() {
+
+			$("#hindex").addClass("acitve")
+			/* 		$("#searchkeyword").keyup(function() {
+						if (event.keyCode == 13) {
+							search_file();
+						}
+					}) */
+		})
+		
+	</script>
+</body>
+</html>

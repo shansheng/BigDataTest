@@ -1,0 +1,8 @@
+eclipse.preferences.version=1
+encoding//configuration/cityprovice.properties=UTF-8
+encoding//configuration/job_education.properties=UTF-8
+encoding//configuration/job_industry_skills_config.json=UTF-8
+encoding//src/com/xiandian/douxue/insight/server/dao/HBaseStorage.java=utf-8
+encoding//src/com/xiandian/douxue/insight/server/dao/JobDataReposity.java=utf-8
+encoding//src/com/xiandian/douxue/insight/server/utils/CityProviceMatch.java=UTF-8
+encoding/<project>=UTF-8

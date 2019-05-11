@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>斗学网-登录</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<#include '../common/stylesheets1.html'>
+<style>
+body{
+    position: inherit!important;
+}
+</style>
+</head>
+<body class="course-dashboard-page">
+<div id="Layer1" style="position:absolute;left:0px;top:0px;width:100%;height:100%;">  
+<div class="container" style="margin-top:5%;width:450px!important;">
+		<div class="modal-content" style="box-shadow:none;">
+			<div class="modal-header">
+				<h3 class="modal-title" style="text-align:center;font-weight:bold;color:#566573;" id="myModalLabel">
+					登录
+				</h3>
+				
+			</div>
+			<div class="modal-body">
+			<div style="height:40px;">
+				<div class="input-group" style="margin-top:10px;">
+					<span class="input-group-addon">账号：</span>
+					<input type="text" id="username" name="_username" class="form-control" placeholder="用户名/手机号">
+				</div>
+				<div class="yz1 hide" style="color:red;font-size:10px;">请输入用户名</div>
+			</div>
+				<br>
+			<div style="height:40px;">
+				<div class="input-group">
+					<span class="input-group-addon">密码：</span>
+					<input id="password" type="password" name="_password" class="form-control" placeholder="密码">
+				</div>
+				<div class="yz2 hide" style="color:red;font-size:10px;">请输入密码</div>
+			</div>
+			</div>
+			<div class="modal-footer" style="text-align:center;">
+				<div class="row" style="margin-top:20px;">
+					<button type="button" class="btn btn-primary" style="width:200px;" onclick="login();return false;">
+						登录
+					</button>
+				</div>
+			</div>
+		</div>
+</div>
+</div>
+<#include '../common/javascripts.html'>
+<script type="text/javascript" src="${request.contextPath}/assets/javascripts/jquery.cookie.js"> </script>
+<script type="text/javascript" src="${request.contextPath}/assets/javascripts/pages/ctologin.js"></script>
+
+</body>
+</html>

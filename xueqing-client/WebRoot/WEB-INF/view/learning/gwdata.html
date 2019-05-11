@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<!-- Required Meta Tags Always Come First -->
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<#include '../common/stylesheets1.html'>
+<link href="${request.contextPath}/assets/stylesheets/pages/gwdata.css" rel="stylesheet">
+<link href="${request.contextPath}/assets/stylesheets/header.css" rel="stylesheet">
+<link href="${request.contextPath}/assets/stylesheets/font-awesome.min.css" rel="stylesheet">
+<title>学情</title>
+<style>
+body {
+    padding: 0;
+    margin: 0;
+    font-family: "microsoft yahei"!important;
+    background: #f1f4f6;
+    min-width: 1400px;
+    height: 100%;
+    position: absolute!important;
+}
+.phbBox{
+margin-top:5px
+}
+.phbBoxdetial{
+padding:10px 
+}
+.phbBoxtitle{
+text-align:center;
+font-weight:600
+}
+.leavel{
+    width: 20px;
+    height: 20px;
+    background: #ccc;
+    text-align: center;
+    color: #fff;
+    float: left;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+.des{
+	text-align: left;
+	font-size: 16px;
+	margin-top: 10px;
+}
+</style>
+</head>
+<body>
+<div class="container-fluid">
+<#include '../learning/learnLeft.html'>
+<div class="main-right">
+<#include '../learning/learnHeader.html'>
+<div class="col-xs-12">
+<div class="panel panel-default panel-box" style="margin-top: 20px;">
+    <div class="panel-body">
+        <div class="pull-left" style="line-height: 44px;margin-right:5px">选择岗位类型:</div>
+         <div class="pull-left checkboxs select" id="job_internet">
+	         <a href="javascript:void(0)" class="cred" onclick="getdatas('job_internet',1)">
+		         <span class="fa fa-globe fapo"></span>
+		         <span class="fontPo">IT总类</span>
+	         </a>
+         </div>
+        <div class="pull-left checkboxs" id="job_cloud">
+	         <a href="javascript:void(0)" class="cblue" onclick="getdatas('job_cloud',1)">
+		         <span class="fa fa-server fapo"></span>
+		         <span class="fontPo">云计算</span>
+	         </a>
+         </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+</div>
+
+<div class="col-xs-12">
+<div class="panel panel-default panel-box">
+	<div class="panel-heading">
+		<h3 class="panel-title">
+		【区域与数量】岗位省份分布
+		</h3>
+	</div>
+	<div class="panel-body">
+		<div class="col-md-9 col-xs-9">
+		 <div id="main" style="width: 100%;height:550px"></div>
+		</div>
+		<div class="col-md-3 col-xs-3 phbBox">
+		 	
+		</div>
+	</div>
+</div>
+</div>
+
+
+<div class="col-xs-12">
+<div class="panel panel-default panel-box">
+	<div class="panel-heading">
+		<h3 class="panel-title">
+		【岗位要求】岗位需求情况分析
+		</h3>
+	</div>
+	<div class="panel-body">
+	<div class="col-md-4 col-xs-4">
+		 <div class="col-md-9 col-xs-9">
+		 <div id="main2" style="width: 100%;height:500px"></div>
+		 <div class="des">岗位需求中学历要求以大专学历为主占37.8%;</div>
+		 </div>
+	</div>
+</div>
+</div>
+
+
+</div>
+</div>
+<#include '../common/javascripts.html'>
+<script src="${request.contextPath}/assets/javascripts/echarts3/echarts.min.js" type="text/javascript"></script>
+<script src="${request.contextPath}/assets/javascripts/echarts3/china.js"></script>
+<script>
+
+
+	var chart = echarts.init(document.getElementById('main'));      //地图
+	var chart2 = echarts.init(document.getElementById('main2'));    //南丁格尔图
+	
+	$(function() {
+		$("#gwdata").addClass("liactive")
+		getdatas("job_internet","0") // 0为初始化
+		var tmp="<a href='${request.contextPath}/'>首页</a><span style='padding:0 10px'>&gt;</span><a href='${request.contextPath}/learning/index'>学情</a><span style='padding:0 10px'>&gt;</span><a href='javascript:void(0)'>岗位分析</a><span style='padding:0 10px'>&gt;</span><a href='javascript:void(0)'>数据统计</a>"
+		$("#route").html(tmp);
+	})
+	
+	function getdatas(name,status){
+		if(status=="1"){
+		$(".checkboxs").removeClass("select");
+		$("#"+name).addClass("select");
+		}
+		var data={"id" : name};
+	 	$.ajax({
+			url : "${request.contextPath}/learning/gwechart",
+			type : "post",
+			data : data,
+			success : function(s) {
+				if (s.success) { 
+					//地图数据
+					var total=s.other;
+					var data1=total.province;
+				   //横向柱状		
+					/* var data2={
+							"dataX" : ['巴西','印尼','美国','印度','中国','世界人口(万)'],
+							"dataY" : [18203, 23489, 29034, 104970, 131744, 630230]
+							}
+					data2=eval(data2); */
+					var data2=total.salary;
+				  //南丁格尔图			
+					/* data3=[
+			                {value:10, name:'rose1'},
+			                {value:5, name:'rose2'},
+			                {value:15, name:'rose3'},
+			                {value:25, name:'rose4'},
+			                {value:20, name:'rose5'},
+			                {value:35, name:'rose6'},
+			                {value:30, name:'rose7'},
+			                {value:40, name:'rose8'}
+			            ]
+					data3=eval(data3); */
+					var data3=total.education;
+					//饼图
+					/* data4=[
+		                {value:335, name:'直接访问'},
+		                {value:310, name:'邮件营销'},
+		                {value:234, name:'联盟广告'},
+		                {value:135, name:'视频广告'},
+		                {value:1548, name:'搜索引擎'}
+		            ]
+					data4=eval(data4); */
+					var data4=total.experience;
+					
+					  //横向柱状		
+					/* var data5={
+							"dataX" : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+							"dataY" : [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+							}
+					data5=eval(data5); */
+					  var data5=total.nature;
+					//企业规模数据	
+					/* var data6={
+							"dataX" : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+							"dataY" : [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+							}
+					data6=eval(data6); */
+					var data6=total.scale;
+					
+					mapdata(data1);//地图数据
+					ndpie(data3);//南丁格尔图
+					var ranks=data1.rank;
+					var html="";
+					html+="<div class='phbBoxtitle'>岗位省份分布排行</div><div class='phbBoxcontents'>";
+					for ( var f = 0; f < ((!!ranks) ? ranks.length: 0); f++){
+						html+="<div class='phbBoxcontents'><div class='phbBoxdetial' ><div class='leavel pull-left'>"+(f+1)+"</div><div class='username pull-left'>"+ranks[f].name+"&nbsp;&nbsp;"+ranks[f].value+"</div><div class='clearfix'></div></div></div>";
+					}
+					$(".phbBox").html(html);
+			 	}
+			} 
+		});
+		
+	}
+	
+	
+
+	
+	function ndpie(datas){
+		option2 = {
+			    title : {
+			        text: '岗位学历需求分析',
+			     
+			        x : 'center',
+			        y : 'bottom',
+			    },
+			    tooltip : {
+			        trigger: 'item',
+			        formatter: "{a} <br/>{b} : {c} ({d}%)"
+			    },
+			    calculable : true,
+			    series : [
+			     
+			        {
+			            name:'岗位学历需求',
+			            type:'pie',
+			            radius : [20, 120],
+			            center : ['50%', '50%'],
+			            roseType : 'area',
+			           
+			            data:datas
+			        }
+			    ]
+			};
+		
+		chart2.setOption(option2);
+	}
+
+	
+	function mapdata(datas) {
+		var data = [ {
+			name : '岗位',
+			type : 'map',
+			mapType : 'china',
+			roam : false,
+			label : {
+				normal : {
+					show : true
+				},
+				emphasis : {
+					show : true
+				}
+			},
+			data : datas.mapobj
+		} ];
+		data = eval(data);
+		chart.setOption({
+			tooltip : {
+				trigger : 'item'
+			},
+			
+			visualMap : {
+				min : 0,
+				max : datas.max,
+				left : 'left',
+				top : 'bottom',
+				text : [ '高', '低' ], // 文本，默认为数值文本
+				calculable : true
+			},
+			toolbox : {
+				show : true,
+				orient : 'vertical',
+				left : 'right',
+				top : 'center',
+				feature : {
+					dataView : {
+						readOnly : false
+					},
+					restore : {},
+					saveAsImage : {}
+				}
+			},
+			series : data
+		})
+	}
+	
+	
+</script>
+
+</body>
+</html>
