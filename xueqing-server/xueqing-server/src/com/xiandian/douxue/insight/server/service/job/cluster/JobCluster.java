@@ -46,7 +46,7 @@ public class JobCluster {
 	final static List dis = new ArrayList<>();
 	private static HBaseStorage hbaseStorage = HBaseStorage.getInstance();
 	private static JobDataReposity jobDataReposity = JobDataReposity.getInstance();
-	
+
 	private Properties hbaseProperties = UtilTools
 			.getConfig(System.getProperty("user.dir") + "/configuration/hbase.properties");
 	private Properties sparkProperties = UtilTools
@@ -56,13 +56,13 @@ public class JobCluster {
 	 * 岗位循环聚类
 	 * 
 	 * @param industry
-	 *                岗位行业
+	 *            岗位行业
 	 * @param category
-	 *                岗位行业类别
+	 *            岗位行业类别
 	 * @param dictionary
-	 *                岗位技能点词典
+	 *            岗位技能点词典
 	 * @param clusterN
-	 *                聚类数量
+	 *            聚类数量
 	 * @param mongoClient
 	 */
 	public void cluster(String industry, String category, List<String> dictionary, int clusterN,
@@ -71,8 +71,9 @@ public class JobCluster {
 		List<String> jobname = new ArrayList<>();
 
 		try {
-//			id = jobDataReposity.queryDataByColumn("job_" + industry, industry, "ID");
-//			jobname = jobDataReposity.queryDataByColumn("job_" + industry, industry, "JOB_NAME");
+			// id = jobDataReposity.queryDataByColumn("job_" + industry, industry, "ID");
+			// jobname = jobDataReposity.queryDataByColumn("job_" + industry, industry,
+			// "JOB_NAME");
 			id = jobDataReposity.queryDataByColumn("job_internet", "TAG_DATA", "ID");
 			jobname = jobDataReposity.queryDataByColumn("job_internet", "TAG_DATA", "JOB_NAME");
 		} catch (Exception e) {
@@ -90,13 +91,11 @@ public class JobCluster {
 				List<String> jdes = new ArrayList<>();
 				List<String> jname = new ArrayList<>();
 				try {
-	//				jdes = jobDataReposity.queryTableByCondition(ids, "job_" + industry, industry,
-	//						"ID", "DESCRIPTION");
-					 jdes = jobDataReposity.queryTableByCondition(ids, "job_internet" ,
-					 "TAG_DATA",
-					 "ID", "DESCRIPTION");// 根据ID取出所有开发类的岗位描述
-					jname = jobDataReposity.queryTableByCondition(ids, "job_internet" , "TAG_DATA",
-							"ID", "JOB_NAME");
+					// jdes = jobDataReposity.queryTableByCondition(ids, "job_" + industry,
+					// industry,
+					// "ID", "DESCRIPTION");
+					jdes = jobDataReposity.queryTableByCondition(ids, "job_internet", "TAG_DATA", "ID", "DESCRIPTION");// 根据ID取出所有开发类的岗位描述
+					jname = jobDataReposity.queryTableByCondition(ids, "job_internet", "TAG_DATA", "ID", "JOB_NAME");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -111,22 +110,22 @@ public class JobCluster {
 	 * 根据词频聚类并存储
 	 * 
 	 * @param description
-	 *                岗位描述
+	 *            岗位描述
 	 * @param jobname
-	 *                岗位名称
+	 *            岗位名称
 	 * @param jobSkills
-	 *                技能词典
+	 *            技能词典
 	 * @param industryName
-	 *                产业
+	 *            产业
 	 * @param categoryName
-	 *                类别
+	 *            类别
 	 * @param clusterNum
-	 *                聚类数量
+	 *            聚类数量
 	 * @param mongoClient
 	 */
-	public void tfKmeans(List<String> description, List<String> jobname, List<String> jobSkills,
-			String industryName, String categoryName, int clusterNum, MongoClient mongoClient) {
-		//String tableName = industryName + "_" + categoryName;
+	public void tfKmeans(List<String> description, List<String> jobname, List<String> jobSkills, String industryName,
+			String categoryName, int clusterNum, MongoClient mongoClient) {
+		// String tableName = industryName + "_" + categoryName;
 		List<String> descriptions = new ArrayList<>();
 		List<String> jobnames = new ArrayList<>();
 		for (int i = 0; i < description.size(); i++) {
@@ -152,8 +151,7 @@ public class JobCluster {
 		List<double[]> jobWeight = new ArrayList<>();
 		List<Integer> indexs = kMeans(outcome1, clusterNum);
 		int js = 15;
-		Map map = mongostorage.create("job_" + industryName, "job_" + industryName + "_" + categoryName,
-				mongoClient);
+		Map map = mongostorage.create("job_" + industryName, "job_" + industryName + "_" + categoryName, mongoClient);
 		MongoCollection<Document> collection = (MongoCollection<Document>) map.get("collection");
 		Document document = (Document) map.get("document");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -208,13 +206,26 @@ public class JobCluster {
 	 * kmeans聚类算法
 	 * 
 	 * @param des1
-	 *                输入向量
+	 *            输入向量
 	 * @param cluster
-	 *                聚类数量
+	 *            聚类数量
 	 * @return
 	 */
 	public List<Integer> kMeans(List<double[]> des1, int cluster) {
 		List<Integer> indexs = new ArrayList<>();
+		SparkConf conf = new SparkConf();
+		JavaSparkContext jsc = new JavaSparkContext(conf);
+
+		JavaRDD<double[]> data = jsc.parallelize(des1);
+		JavaRDD<Vector> parsedata = data.map(s -> {
+			Vector value = Vectors.dense(s);
+			return value;
+		});
+
+		parsedata.cache();
+		KMeansModel clusters = KMeans.train(parsedata.rdd(), cluster, 20, 10);
+
+		indexs = clusters.predict(parsedata).collect();
 
 		return indexs;
 	}
@@ -223,11 +234,11 @@ public class JobCluster {
 	 * 岗位分类
 	 * 
 	 * @param id
-	 *                岗位id
+	 *            岗位id
 	 * @param jobname
-	 *                岗位名称
+	 *            岗位名称
 	 * @param industry
-	 *                岗位产业
+	 *            岗位产业
 	 * @return
 	 */
 	private Map<String, Map<String, String>> allJobClassification(List<String> id, List<String> jobname,
@@ -273,8 +284,7 @@ public class JobCluster {
 		for (Map.Entry<String, String> m : allJob.entrySet()) {
 			for (int i = 0; i < ((List<String>) classification.get(1)).size(); i++) {
 				if (judge(((List<String[]>) classification.get(0)).get(i), m.getValue())) {
-					alljobs.get(((List<String>) classification.get(1)).get(i)).put(m.getKey(),
-							m.getValue());
+					alljobs.get(((List<String>) classification.get(1)).get(i)).put(m.getKey(), m.getValue());
 					// allJob1.remove(m.getKey());
 					break;
 				}
@@ -304,9 +314,9 @@ public class JobCluster {
 	 * 获取一类岗位名称
 	 * 
 	 * @param names
-	 *                所有岗位名称
+	 *            所有岗位名称
 	 * @param weights
-	 *                一类向量
+	 *            一类向量
 	 * @param nas
 	 * @return
 	 */
