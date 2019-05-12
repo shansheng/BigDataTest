@@ -214,7 +214,6 @@ public class JobCluster {
 	 * @return
 	 */
 	public List<Integer> kMeans(List<double[]> des1, int cluster) {
-
 		List<Integer> indexs = new ArrayList<>();
 
 		return indexs;

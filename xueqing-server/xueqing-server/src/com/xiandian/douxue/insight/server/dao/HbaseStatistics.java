@@ -48,6 +48,7 @@ public class HbaseStatistics {
 	private Properties hadoopProperties = UtilTools
 			.getConfig(System.getProperty("user.dir") + "/configuration/hadoop.properties");
 	private Map<String, String> cities = new HashMap<String, String>();
+	private Map<String, String> educations = new HashMap<String, String>();
 	private static Connection connection;
 
 	public HbaseStatistics() {
@@ -320,6 +321,100 @@ public class HbaseStatistics {
 	 * @throws IOException
 	 */
 	public void countEducationDistribution(String tableName, String mongoTable, String family) throws SQLException, IOException {/////
+		MongoClient mongoClient = mongodbstorage.setUp();
+		// String sql = "select LOCATION,count(1) as count,sum(AMOUNT) from " +
+		// tableName
+		// + " where ISPERCEPTED = 'no' group by LOCATION order by count desc";
+		// ResultSet results = stmt.executeQuery(sql);
+
+		// 建立表的连接
+		Table table = connection.getTable(TableName.valueOf(tableName));
+		// 创建一个空的Scan实例
+		Scan scan1 = new Scan();
+		// 可以指定具体的列族列
+		scan1.addColumn(Bytes.toBytes(family), Bytes.toBytes("EDUCATION")).addColumn(Bytes.toBytes(family),
+				Bytes.toBytes("AMOUNT"));
+		scan1.setCaching(60);
+		scan1.setMaxResultSize(1 * 1024 * 1024); // 100k （MB1 * 1024 * 1024）
+		scan1.setFilter(new PageFilter(1000));
+
+		// 在行上获取遍历器
+		ResultScanner scanner1 = table.getScanner(scan1);
+
+		Map map = mongodbstorage.create(mongoTable, "job_education_distribution", mongoClient);// mongodb集合,key,value
+		MongoCollection<Document> collection = (MongoCollection<Document>) map.get("collection");
+		Document document = (Document) map.get("document");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		java.util.Date date = new java.util.Date();
+		String da = sdf.format(date);
+		mongodbstorage.appendString(document, "date", da);
+		int[] cu = new int[34];
+		int[] nu = new int[34];
+		Vector<Document> vec = new Vector<Document>();
+		for (Result res : scanner1) {
+			String loc = (new String(CellUtil.cloneValue(res.rawCells()[1]))).split("-")[0];
+			int total = Integer.parseInt(new String(CellUtil.cloneValue(res.rawCells()[0])));
+			int num = 1;
+			if (!educations.containsKey(loc)) {
+			} else {
+				// String prov = jobanalysisreposity.appendProvinceDistribution(document, loc,
+				// total, mongoClient);
+				String prov = educations.get(loc);
+				switch (prov) {
+				case "初中":
+					cu[0] += total;
+					nu[0] += num;
+					break;
+				case "高中":
+					cu[1] += total;
+					nu[1] += num;
+					break;
+				case "中技":
+					cu[2] += total;
+					nu[2] += num;
+					break;
+				case "中专":
+					cu[3] += total;
+					nu[3] += num;
+					break;
+				case "大专":
+					cu[4] += total;
+					nu[4] += num;
+					break;
+				case "本科":
+					cu[5] += total;
+					nu[5] += num;
+					break;
+				case "硕士":
+					cu[6] += total;
+					nu[6] += num;
+					break;
+				case "博士":
+					cu[7] += total;
+					nu[7] += num;
+					break;
+				}
+			}
+			logger.info(loc + ":" + total);
+		}
+		Document[] doc = new Document[34];
+		for (int i = 0; i <= 33; i++) {
+			doc[i] = new Document();
+		}
+		mongodbstorage.appendExperience(doc[0], "初中", cu[0], nu[0]);
+		mongodbstorage.appendExperience(doc[1], "高中", cu[1], nu[1]);
+		mongodbstorage.appendExperience(doc[2], "中技", cu[2], nu[2]);
+		mongodbstorage.appendExperience(doc[3], "中专", cu[3], nu[3]);
+		mongodbstorage.appendExperience(doc[4], "大专", cu[4], nu[4]);
+		mongodbstorage.appendExperience(doc[5], "本科", cu[5], nu[5]);
+		mongodbstorage.appendExperience(doc[6], "硕士", cu[6], nu[6]);
+		mongodbstorage.appendExperience(doc[7], "博士", cu[7], nu[7]);
+		
+		for (int i = 0; i <= 33; i++) {
+			vec.add(doc[i]);
+		}
+		mongodbstorage.appendArray(document, "category", vec);
+		mongodbstorage.insertOne(collection, document);
 	}
 
 	/**

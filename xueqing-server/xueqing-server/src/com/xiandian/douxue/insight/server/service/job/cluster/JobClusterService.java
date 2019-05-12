@@ -98,7 +98,25 @@ public class JobClusterService implements Service {
 	 * 具体的实现。
 	 */
 	public ServiceState process() {/////
-
+		JobCluster jobCluster=new JobCluster();
+		String jobConfig = ReadFile.ReadFile(System.getProperty("user.dir") + "/configuration/job_classification.json");
+		JSONObject jsonObject = new JSONObject(jobConfig);
+		JSONArray totals = jsonObject.getJSONArray("total");
+		for (int i = 0; i < totals.length(); i++) {
+			JSONObject total = totals.getJSONObject(i);
+			String industry= total.getString("industry");
+			JSONArray classfications=total.getJSONArray("classification");
+			for(int ii=0;ii<classfications .length();ii++) {
+				JSONObject classfication=classfications.getJSONObject(ii);
+				String category=classfication.getString("category");
+				String[] keywords=classfication.getString("keywords").split(",");
+				List<String> dictionary=new ArrayList<String>();
+				for(String keyword : keywords) {
+					dictionary.add(keyword);
+				}
+				jobCluster.cluster(industry, category, dictionary, clusterCount[0], mongoClient);
+			}
+		}
 		return ServiceState.STATE_RUNNING;
 	}
 

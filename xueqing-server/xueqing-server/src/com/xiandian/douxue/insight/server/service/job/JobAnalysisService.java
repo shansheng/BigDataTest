@@ -68,11 +68,11 @@ public class JobAnalysisService implements Service {
 //		Service jobCollector = new JobCollectService(server, this);
 //		jobCollector.start();
 //		// 2. 启动清洗服务（清洗）
-		Service jobCleaner = new JobCleanService(server, this);
-		jobCleaner.start();
+//		Service jobCleaner = new JobCleanService(server, this);
+//		jobCleaner.start();
 //		// 3. 启动分析服务（聚类）
-//		Service jobCluster = new JobClusterService(server, this);
-//		jobCluster.start();
+		Service jobCluster = new JobClusterService(server, this);
+		jobCluster.start();
 		return ServiceState.STATE_RUNNING;
 	}
 
