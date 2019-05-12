@@ -30,24 +30,25 @@ import com.xiandian.douxue.insight.server.utils.UtilTools;
  * @author XianDian Cloud Team
  */
 public class JobCleanService implements Service {
-	
+
 	private Logger logger = LoggerFactory.getLogger(getClass());
-	private Properties  cronProperties = UtilTools.getConfig(System.getProperty("user.dir") + "/configuration/service_cron.properties");	
+	private Properties cronProperties = UtilTools
+			.getConfig(System.getProperty("user.dir") + "/configuration/service_cron.properties");
 	private static JobDataReposity jobDataReposity = JobDataReposity.getInstance();
 
-	
 	private String SERVICE_NAME = "douxue/insight/job/clean";
 	private Service parent;
 	private Server server;
-	//记录任务是否完成
+	// 记录任务是否完成
 	private AtomicBoolean isTaskDone = new AtomicBoolean();
 
-	//分析的岗位群(hbasetable=cloud,bigdata,ai,iot,software,mobile)
+	// 分析的岗位群(hbasetable=cloud,bigdata,ai,iot,software,mobile)
 	private static Properties hbaseclassify = UtilTools
 			.getConfig(System.getProperty("user.dir") + "/configuration/hbaseclassify.properties");
 
 	/**
 	 * 岗位数据清洗。
+	 * 
 	 * @param server
 	 * @param service
 	 */
@@ -56,7 +57,7 @@ public class JobCleanService implements Service {
 		this.parent = service;
 		init();
 	}
-	
+
 	@Override
 	public Server getServer() {
 
@@ -80,21 +81,20 @@ public class JobCleanService implements Service {
 	 */
 	@Override
 	public ServiceState start() {
-		//TODO: 应该由调用控制
+		// TODO: 应该由调用控制
 		String isStop = cronProperties.getProperty("jobclean_service");
-		if (isStop.equals("stop"))
-		{
+		if (isStop.equals("stop")) {
 			logger.info("外部User控制不启动服务" + SERVICE_NAME);
 			return ServiceState.STATE_NOTSTART;
 		}
-		
+
 		// 统计分析
 		// 本次强制执
-		ServiceJob.submitOnceJob(server, SERVICE_NAME+"/start", this.parent.getServiceName(), this);
+		ServiceJob.submitOnceJob(server, SERVICE_NAME + "/start", this.parent.getServiceName(), this);
 		// 周期执行 0 0 1 * * ?
-		String cron=cronProperties.getProperty("jobclean_cron");
+		String cron = cronProperties.getProperty("jobclean_cron");
 		logger.info(this.SERVICE_NAME + cron);
-		ServiceJob.submitCronJob(server, SERVICE_NAME, this.parent.getServiceName(), this, cron);//test 0/10 * * * * ?
+		ServiceJob.submitCronJob(server, SERVICE_NAME, this.parent.getServiceName(), this, cron);// test 0/10 * * * * ?
 		return ServiceState.STATE_STARTED;
 	}
 
@@ -113,11 +113,16 @@ public class JobCleanService implements Service {
 	public ServiceState getState() {
 		return ServiceState.STATE_RUNNING;
 	}
+
 	/**
 	 * 具体的实现。
 	 */
 	public synchronized ServiceState process() {/////
-
+		try {
+			jobDataReposity.cleanJobData();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return ServiceState.STATE_RUNNING;
 	}
 }

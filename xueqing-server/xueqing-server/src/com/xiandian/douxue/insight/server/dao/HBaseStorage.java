@@ -19,6 +19,7 @@ import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.ConnectionFactory;
 import org.apache.hadoop.hbase.client.Delete;
 import org.apache.hadoop.hbase.client.Get;
+import org.apache.hadoop.hbase.client.HBaseAdmin;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
@@ -46,6 +47,8 @@ public class HBaseStorage {
 	static Connection connection;
 	// 数据库元数据操作对象
 	private static Admin admin;
+	
+	private Configuration conf = HBaseConfiguration.create();
 	/**
 	 * 构造
 	 */
@@ -70,7 +73,7 @@ public class HBaseStorage {
 	 */
 	public void setUp(String url, String port,String path) {
 		// 取得一个数据库连接的配置参数对象
-		Configuration conf = HBaseConfiguration.create();
+		conf = HBaseConfiguration.create();
 		// 设置连接参数：HBase数据库所在的主机IP
 		conf.set("hbase.zookeeper.quorum", url);
 		// 设置连接参数：HBase数据库使用的端口
@@ -100,12 +103,22 @@ public class HBaseStorage {
 	 * 创建表
 	 */
 	public void createTable(String tablename,String families) throws IOException {/////
-
+		HBaseAdmin baseAdmin=new HBaseAdmin(conf);
+		
+		HTableDescriptor tableDescriptor = new HTableDescriptor(tablename);
+		
+		String[] familiesList=families.split(",");
+		for(String family:familiesList) {
+			HColumnDescriptor columnDescriptor=new HColumnDescriptor(family);
+			tableDescriptor.addFamily(columnDescriptor);
+		}
+		
+		baseAdmin.createTable(tableDescriptor);
 	}
 	
 	public static void main(String[] args) {
 		HBaseStorage baseStorage=HBaseStorage.getInstance();
-		baseStorage.setUp("172.24.2.110", "2181","/hbase");
+		baseStorage.setUp("192.168.108.130", "2181","/hbase");
 		try {
 			baseStorage.createTable("job_internet", "RAW_DATA,TAG_DATA,PERCEPT_DATA");
 			baseStorage.createTable("job_cloud", "cloud");
