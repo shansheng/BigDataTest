@@ -14,6 +14,7 @@ import com.xiandian.douxue.insight.server.base.Server;
 import com.xiandian.douxue.insight.server.base.Service;
 import com.xiandian.douxue.insight.server.base.ServiceState;
 import com.xiandian.douxue.insight.server.dao.HBaseStorage;
+import com.xiandian.douxue.insight.server.dao.MongoDBStorage;
 import com.xiandian.douxue.insight.server.service.job.clean.JobCleanService;
 import com.xiandian.douxue.insight.server.service.job.cluster.JobClusterService;
 import com.xiandian.douxue.insight.server.service.job.collect.JobCollectService;

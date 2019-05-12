@@ -73,8 +73,8 @@ public class JobCluster {
 		try {
 //			id = jobDataReposity.queryDataByColumn("job_" + industry, industry, "ID");
 //			jobname = jobDataReposity.queryDataByColumn("job_" + industry, industry, "JOB_NAME");
-			id = jobDataReposity.queryDataByColumn("job_" + industry, industry, "ID");
-			jobname = jobDataReposity.queryDataByColumn("job_" + industry, industry, "JOB_NAME");
+			id = jobDataReposity.queryDataByColumn("job_internet", "TAG_DATA", "ID");
+			jobname = jobDataReposity.queryDataByColumn("job_internet", "TAG_DATA", "JOB_NAME");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -90,12 +90,12 @@ public class JobCluster {
 				List<String> jdes = new ArrayList<>();
 				List<String> jname = new ArrayList<>();
 				try {
-					jdes = jobDataReposity.queryTableByCondition(ids, "job_" + industry, industry,
-							"ID", "DESCRIPTION");
-					// jdes = jobDataReposity.queryTableByCondition(ids, "job_internet" ,
-					// "TAG_DATA",
-					// "ID", "DESCRIPTION");// 根据ID取出所有开发类的岗位描述
-					jname = jobDataReposity.queryTableByCondition(ids, "job_" + industry, industry,
+	//				jdes = jobDataReposity.queryTableByCondition(ids, "job_" + industry, industry,
+	//						"ID", "DESCRIPTION");
+					 jdes = jobDataReposity.queryTableByCondition(ids, "job_internet" ,
+					 "TAG_DATA",
+					 "ID", "DESCRIPTION");// 根据ID取出所有开发类的岗位描述
+					jname = jobDataReposity.queryTableByCondition(ids, "job_internet" , "TAG_DATA",
 							"ID", "JOB_NAME");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -126,7 +126,7 @@ public class JobCluster {
 	 */
 	public void tfKmeans(List<String> description, List<String> jobname, List<String> jobSkills,
 			String industryName, String categoryName, int clusterNum, MongoClient mongoClient) {
-		String tableName = industryName + "_" + categoryName;
+		//String tableName = industryName + "_" + categoryName;
 		List<String> descriptions = new ArrayList<>();
 		List<String> jobnames = new ArrayList<>();
 		for (int i = 0; i < description.size(); i++) {
