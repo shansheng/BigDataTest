@@ -227,20 +227,20 @@ public class LearningController extends BaseController {
 		Map<String, Object> echartsObjs1 = jobAnalysisReposity.getMap(mongoClient, id, province);
 		map.put("province", echartsObjs1);
 		// 薪资
-		Map<String, Object> map1 = jobAnalysisReposity.getSalary(mongoClient, id, salary);
-		map.put("salary", map1);
+//		Map<String, Object> map1 = jobAnalysisReposity.getSalary(mongoClient, id, salary);
+//		map.put("salary", map1);
 		// 学历
-		List<EchartsObj> echartsObjs2 = jobAnalysisReposity.getEducation(mongoClient, id, education);
-		map.put("education", echartsObjs2);
+//		List<EchartsObj> echartsObjs2 = jobAnalysisReposity.getEducation(mongoClient, id, education);
+//		map.put("education", echartsObjs2);
 		// 经验
-		List<EchartsObj> echartsObjs3 = jobAnalysisReposity.getExperience(mongoClient, id, experience);
-		map.put("experience", echartsObjs3);
+//		List<EchartsObj> echartsObjs3 = jobAnalysisReposity.getExperience(mongoClient, id, experience);
+//		map.put("experience", echartsObjs3);
 		// 性质
-		Map<String, Object> map2 = jobAnalysisReposity.getNature(mongoClient, id, nature);
-		map.put("nature", map2);
+//		Map<String, Object> map2 = jobAnalysisReposity.getNature(mongoClient, id, nature);
+//		map.put("nature", map2);
 		// 规模
-		Map<String, Object> map3 = jobAnalysisReposity.getScale(mongoClient, id, scale);
-		map.put("scale", map3);
+//		Map<String, Object> map3 = jobAnalysisReposity.getScale(mongoClient, id, scale);
+//		map.put("scale", map3);
 		return new MessageBean(true, "", map);
 
 	}
