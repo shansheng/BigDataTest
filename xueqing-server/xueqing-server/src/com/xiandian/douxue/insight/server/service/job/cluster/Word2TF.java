@@ -23,7 +23,7 @@ public class Word2TF {
 	public static List<Integer> clean(List<double[]> dou) {
 		List<Integer> index = new ArrayList<>();
 		for (int i = 0; i < dou.size(); i++) {
-			if (sum(dou.get(i)) > 5) {
+			if (sum(dou.get(i)) >= 0) {
 				index.add(i);
 			}
 		}
@@ -60,7 +60,7 @@ public class Word2TF {
 					vec = vec + dictionary.get(i) + "/";
 
 			}
-			return vec.substring(0, vec.length() - 1);
+			return vec;
 		}
 	}
 

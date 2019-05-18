@@ -145,7 +145,6 @@ public class JobCluster {
 			outcome1.add(weights.get(index1.get(i)));
 			jobname1.add(jobnames.get(index1.get(i)));
 		}
-
 		List<String> cluster = new ArrayList<>();
 		List<String> names = new ArrayList<>();
 		List<double[]> jobWeight = new ArrayList<>();
@@ -214,7 +213,7 @@ public class JobCluster {
 	public List<Integer> kMeans(List<double[]> des1, int cluster) {
 		List<Integer> indexs = new ArrayList<>();
 		SparkConf conf  = new SparkConf().setMaster("local[2]")
-				.setAppName("xueqing-server");
+				.setAppName("xueqing-server").set("spark.driver.allowMultipleContexts","true");
 		JavaSparkContext jsc = new JavaSparkContext(conf);
 
 		JavaRDD<double[]> data = jsc.parallelize(des1);
@@ -227,6 +226,7 @@ public class JobCluster {
 		KMeansModel clusters = KMeans.train(parsedata.rdd(), cluster, 20, 10);
 
 		indexs = clusters.predict(parsedata).collect();
+		jsc.stop();
 		return indexs;
 	}
 

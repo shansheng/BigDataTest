@@ -539,16 +539,16 @@ public class JobAnalysisReposity {
 			Map<String, Object> markArea = null;
 			switch (i) {
 			case 0:
-				markArea=getColor("#F5F5F5", "潜力者", 50, 50, 75, 75);
+				markArea = getColor("#F5F5F5", "潜力者", 50, 50, 75, 75);
 				break;
 			case 1:
-				markArea=getColor("#F5F5F5", "挑战者", 50, 75, 75, 100);
+				markArea = getColor("#F5F5F5", "挑战者", 50, 75, 75, 100);
 				break;
 			case 2:
-				markArea=getColor("#F5F5F5", "跟随者", 75, 50, 100, 75);
+				markArea = getColor("#F5F5F5", "跟随者", 75, 50, 100, 75);
 				break;
 			case 3:
-				markArea=getColor("#F5F5F5", "领跑者", 75,75, 100, 100);
+				markArea = getColor("#F5F5F5", "领跑者", 75, 75, 100, 100);
 				break;
 			default:
 				break;
@@ -934,7 +934,7 @@ public class JobAnalysisReposity {
 
 	public Map<String, Object> getSkills(MongoClient mongoClient, String allparam, String param) {
 		// database job_cloud
-		String[] jobs = { "develop", "framework", "operation", "test", "game", "web" };
+		String[] jobs = { "develop", "framework", "manage", "operation", "other", "sales" };
 		Map<String, Object> map = new HashMap<>();
 		List<String> weight = new ArrayList<>();
 		List<RaderObj> list = new ArrayList<>();
@@ -951,13 +951,15 @@ public class JobAnalysisReposity {
 						JSONArray jsonArraySkills = jsonObject_.getJSONArray("skills");
 						for (int j = 0; j < jsonArraySkills.size(); j++) {
 							JSONObject jsonArraySkill = jsonArraySkills.getJSONObject(j);
-							String Skill_name = jsonArraySkill.getString("Skill_name");
-							String Skill_weight = jsonArraySkill.getString("Skill_weight");
-							weight.add(Skill_weight);
-							RaderObj raderObj = new RaderObj();
-							raderObj.setMax(1);
-							raderObj.setName(Skill_name);
-							list.add(raderObj);
+							if (!jsonArraySkill.isNullObject()) {
+								String Skill_name = jsonArraySkill.getString("Skill_name");
+								String Skill_weight = jsonArraySkill.getString("Skill_weight");
+								weight.add(Skill_weight);
+								RaderObj raderObj = new RaderObj();
+								raderObj.setMax(1);
+								raderObj.setName(Skill_name);
+								list.add(raderObj);
+							}
 						}
 					}
 				}
