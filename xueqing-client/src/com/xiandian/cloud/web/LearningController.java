@@ -230,8 +230,8 @@ public class LearningController extends BaseController {
 //		Map<String, Object> map1 = jobAnalysisReposity.getSalary(mongoClient, id, salary);
 //		map.put("salary", map1);
 		// 学历
-//		List<EchartsObj> echartsObjs2 = jobAnalysisReposity.getEducation(mongoClient, id, education);
-//		map.put("education", echartsObjs2);
+		List<EchartsObj> echartsObjs2 = jobAnalysisReposity.getEducation(mongoClient, id, education);
+		map.put("education", echartsObjs2);
 		// 经验
 //		List<EchartsObj> echartsObjs3 = jobAnalysisReposity.getExperience(mongoClient, id, experience);
 //		map.put("experience", echartsObjs3);

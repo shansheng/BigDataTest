@@ -7,8 +7,10 @@ package com.xiandian.douxue.insight.server.dao;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Vector;
@@ -43,12 +45,14 @@ public class HbaseStatistics {
 	private MongoDBStorage mongodbstorage = MongoDBStorage.getInstance();
 	private static Properties cityprovice = UtilTools
 			.getConfig(System.getProperty("user.dir") + "/configuration/cityprovice.properties");
+	private static Properties education = UtilTools
+			.getConfig(System.getProperty("user.dir") + "/configuration/job_education.properties");
 	private Properties hbaseProperties = UtilTools
 			.getConfig(System.getProperty("user.dir") + "/configuration/hbase.properties");
 	private Properties hadoopProperties = UtilTools
 			.getConfig(System.getProperty("user.dir") + "/configuration/hadoop.properties");
 	private Map<String, String> cities = new HashMap<String, String>();
-	private Map<String, String> educations = new HashMap<String, String>();
+	private List<String> educations = new ArrayList<String>();
 	private static Connection connection;
 
 	public HbaseStatistics() {
@@ -70,6 +74,10 @@ public class HbaseStatistics {
 			for (String c : city) {
 				cities.put(c, p);
 			}
+		}
+		String[] educationStr= education.getProperty("education").split(",");
+		for(String p:educationStr) {
+			educations.add(p);
 		}
 	}
 
@@ -332,7 +340,7 @@ public class HbaseStatistics {
 		// 创建一个空的Scan实例
 		Scan scan1 = new Scan();
 		// 可以指定具体的列族列
-		scan1.addColumn(Bytes.toBytes(family), Bytes.toBytes("EDUCATION")).addColumn(Bytes.toBytes(family),
+		scan1.addColumn(Bytes.toBytes("TAG_DATA"), Bytes.toBytes("EDUCATION")).addColumn(Bytes.toBytes(family),
 				Bytes.toBytes("AMOUNT"));
 		scan1.setCaching(60);
 		scan1.setMaxResultSize(1 * 1024 * 1024); // 100k （MB1 * 1024 * 1024）
@@ -348,18 +356,18 @@ public class HbaseStatistics {
 		java.util.Date date = new java.util.Date();
 		String da = sdf.format(date);
 		mongodbstorage.appendString(document, "date", da);
-		int[] cu = new int[34];
-		int[] nu = new int[34];
+		int[] cu = new int[8];
+		int[] nu = new int[8];
 		Vector<Document> vec = new Vector<Document>();
 		for (Result res : scanner1) {
 			String loc = (new String(CellUtil.cloneValue(res.rawCells()[1]))).split("-")[0];
 			int total = Integer.parseInt(new String(CellUtil.cloneValue(res.rawCells()[0])));
 			int num = 1;
-			if (!educations.containsKey(loc)) {
+			if (!educations.contains(loc)) {
 			} else {
 				// String prov = jobanalysisreposity.appendProvinceDistribution(document, loc,
 				// total, mongoClient);
-				String prov = educations.get(loc);
+				String prov = loc;
 				switch (prov) {
 				case "初中":
 					cu[0] += total;
@@ -397,8 +405,8 @@ public class HbaseStatistics {
 			}
 			logger.info(loc + ":" + total);
 		}
-		Document[] doc = new Document[34];
-		for (int i = 0; i <= 33; i++) {
+		Document[] doc = new Document[8];
+		for (int i = 0; i < 8; i++) {
 			doc[i] = new Document();
 		}
 		mongodbstorage.appendExperience(doc[0], "初中", cu[0], nu[0]);
@@ -410,7 +418,7 @@ public class HbaseStatistics {
 		mongodbstorage.appendExperience(doc[6], "硕士", cu[6], nu[6]);
 		mongodbstorage.appendExperience(doc[7], "博士", cu[7], nu[7]);
 		
-		for (int i = 0; i <= 33; i++) {
+		for (int i = 0; i < 8; i++) {
 			vec.add(doc[i]);
 		}
 		mongodbstorage.appendArray(document, "category", vec);
@@ -428,7 +436,7 @@ public class HbaseStatistics {
 	public void doDataStatistics() throws IOException {
 		// TODO 通过配置循环创建，不能硬编码，如果增加新的岗位分析，无法实现！
 		operate("job_internet", "job_internet","PERCEPT_DATA");
-		operate("job_cloud", "job_cloud","cloud");
+//		operate("job_cloud", "job_cloud","cloud");
 	}
 
 	/**
